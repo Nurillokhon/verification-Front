@@ -1,5 +1,6 @@
 export type {
   ApiBoolean,
+  CertificateDataItem,
   CertificateDetail,
   CertificateHistoryItem,
   CertificateListItem,

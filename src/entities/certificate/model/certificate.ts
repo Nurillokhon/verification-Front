@@ -33,7 +33,6 @@ export function canEditCertificate(
 export function isCertificatePaid(
   certificate: Pick<CertificateListItem, "is_paid">,
 ) {
-  console.log(certificate, "ky");
   return parseApiBoolean(certificate.is_paid) ?? false;
 }
 

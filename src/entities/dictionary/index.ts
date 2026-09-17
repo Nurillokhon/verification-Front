@@ -1,2 +1,20 @@
-export { toSelectOptions, type DictionaryItem, type LanguageItem } from './model/types'
-export { useCertificateTypes, useDegrees, useLanguages } from './api/dictionary-api'
+export {
+  toOptionsFromStrings,
+  toSelectOptions,
+  type CustomFieldKind,
+  type DictionaryItem,
+  type LanguageItem,
+  type TypeForm,
+  type TypeFormCoreName,
+  type TypeFormCoreRule,
+  type TypeFormCustomField,
+  type TypeFormScoreField,
+} from './model/types'
+export {
+  DEFAULT_LANGUAGE_CODE,
+  useCertificateTypes,
+  useDefaultLanguage,
+  useDegrees,
+  useLanguages,
+  useTypeForm,
+} from './api/dictionary-api'

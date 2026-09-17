@@ -1,4 +1,4 @@
-export { Button, buttonVariants } from './button'
+export { Button, buttonVariants, type ButtonSize, type ButtonVariant } from './button'
 export { Container } from './container'
 export { FileField } from './file-field'
 export { FormAlert } from './form-alert'

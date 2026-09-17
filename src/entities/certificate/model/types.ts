@@ -46,6 +46,8 @@ export type CertificateDetail = CertificateListItem & {
   reference: string
   /** Bo'limlar ballari (swagger: ScoreRead[]); eski javoblarda JSON satr — parseExtraData() orqali o'qiladi */
   extra_data: CertificateScore[] | string | null
+  /** Tur formasidagi erkin maydonlar qiymatlari (swagger: DataItemRead[]) */
+  data?: CertificateDataItem[] | null
 }
 
 /** swagger: ScoreRead */
@@ -54,6 +56,18 @@ export type CertificateScore = {
   /** Bo'lim NOMI (masalan "Reading"), ID emas */
   section: string | null
   score: string | null
+}
+
+/**
+ * swagger: DataItemRead — tur formasidagi `custom_fields` qiymati. `label` ariza
+ * yuborilgan paytdagi nomi, ya'ni tur formasi keyin o'zgarsa ham eski nom qoladi.
+ */
+export type CertificateDataItem = {
+  key: string
+  label: string
+  /** text | number | date | select */
+  kind: string
+  value: unknown
 }
 
 /** GET /main/certificate-history/<id>/ elementi (swagger: CertificateHistoty) */

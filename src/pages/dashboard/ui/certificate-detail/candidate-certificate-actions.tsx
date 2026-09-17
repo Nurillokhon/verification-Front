@@ -1,7 +1,8 @@
-import { CreditCard, Pencil } from 'lucide-react'
+import { Pencil } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { generatePath, Link } from 'react-router'
 import { canEditCertificate, isCertificatePaid, type CertificateDetail } from '@/entities/certificate'
+import { PayButton } from '@/features/certificate-payment'
 import { ROUTES } from '@/shared/config'
 import { buttonVariants } from '@/shared/ui'
 
@@ -20,12 +21,8 @@ export function CandidateCertificateActions({ certificate }: { certificate: Cert
           {t('dashboard.certificates.detail.edit')}
         </Link>
       )}
-      {!isCertificatePaid(certificate) && certificate.pay_url && (
-        <a href={certificate.pay_url} className={buttonVariants()}>
-          <CreditCard className="size-4 shrink-0" strokeWidth={2.4} aria-hidden="true" />
-          {t('dashboard.certificates.detail.pay')}
-        </a>
-      )}
+      {/* Havola sertifikatdagi pay_url dan emas — u eskirgan bo'lishi mumkin */}
+      {!isCertificatePaid(certificate) && <PayButton certificateId={certificate.id} />}
     </>
   )
 }

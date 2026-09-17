@@ -238,7 +238,7 @@
       },
       "items": {
         "dashboard": "Dashboard",
-        "certificates": "Mening sertifikatlarim",
+        "certificates": "Mening arizalarim",
         "newApplication": "Yangi ariza",
         "applications": "Arizalar",
         "reviews": "Tekshiruv tarixi",
@@ -262,15 +262,33 @@
     },
     "pages": {
       "comingSoon": "Tez orada",
-      "index": { "title": "Dashboard" },
-      "certificates": { "title": "Mening sertifikatlarim" },
-      "newApplication": { "title": "Yangi ariza" },
-      "applications": { "title": "Arizalar" },
-      "reviews": { "title": "Tekshiruv tarixi" },
-      "experts": { "title": "Ekspertlar" },
-      "forms": { "title": "Formalar ro'yxati" },
-      "analytics": { "title": "Tahlil va Hisobotlar" },
-      "profile": { "title": "Profil ma'lumotlari" }
+      "index": {
+        "title": "Dashboard"
+      },
+      "certificates": {
+        "title": "Mening sertifikatlarim"
+      },
+      "newApplication": {
+        "title": "Yangi ariza"
+      },
+      "applications": {
+        "title": "Arizalar"
+      },
+      "reviews": {
+        "title": "Tekshiruv tarixi"
+      },
+      "experts": {
+        "title": "Ekspertlar"
+      },
+      "forms": {
+        "title": "Formalar ro'yxati"
+      },
+      "analytics": {
+        "title": "Tahlil va Hisobotlar"
+      },
+      "profile": {
+        "title": "Profil ma'lumotlari"
+      }
     },
     "profile": {
       "breadcrumb": {
@@ -391,7 +409,6 @@
         "fallbackTitle": "Sertifikat",
         "title": "Sertifikat № {{number}}",
         "edit": "Tahrirlash",
-        "pay": "To'lash",
         "openFile": "Faylni ochish",
         "infoTitle": "Sertifikat ma'lumotlari",
         "extraTitle": "Qo'shimcha ma'lumotlar",
@@ -618,13 +635,13 @@
       "sections": {
         "main": "Asosiy ma'lumotlar",
         "extra": "Qo'shimcha ma'lumotlar",
-        "file": "Sertifikat fayli"
+        "file": "Sertifikat fayli",
+        "scores": "Ballar"
       },
       "fields": {
         "number": "Sertifikat raqami",
         "numberPlaceholder": "Masalan: AB123456",
         "type": "Sertifikat turi",
-        "language": "Til",
         "degree": "Daraja",
         "issueDate": "Berilgan sana",
         "examDate": "Imtihon sanasi",
@@ -632,11 +649,13 @@
         "examPlacePlaceholder": "Masalan: Toshkent",
         "select": "Tanlang",
         "file": "Fayl (PDF yoki rasm)",
-        "fileHint": "PDF, JPG yoki PNG, 10 MB gacha",
+        "fileHint": "PDF, JPG yoki PNG, 5 MB gacha",
         "fileKeepHint": "Yangi fayl tanlanmasa, joriy fayl saqlanib qoladi",
         "fileChoose": "Faylni tanlang",
         "fileRemove": "Faylni olib tashlash",
-        "fileCurrent": "Joriy fayl"
+        "fileCurrent": "Joriy fayl",
+        "typeEmpty": "Bu til uchun sertifikat turlari topilmadi",
+        "typeFormLoading": "Tur formasi yuklanmoqda…"
       },
       "submitCreate": "Arizani yuborish",
       "submitEdit": "O'zgarishlarni saqlash",
@@ -645,18 +664,28 @@
         "required": "Bu maydonni to'ldiring",
         "number": "Son kiriting",
         "fileRequired": "Sertifikat faylini yuklang",
-        "fileTooLarge": "Fayl hajmi 10 MB dan oshmasligi kerak",
-        "apiFallback": "So'rovni bajarib bo'lmadi. Birozdan so'ng qayta urinib ko'ring."
+        "fileTooLarge": "Fayl hajmi 5 MB dan oshmasligi kerak",
+        "apiFallback": "So'rovni bajarib bo'lmadi. Birozdan so'ng qayta urinib ko'ring.",
+        "integer": "Butun son kiriting",
+        "min": "Qiymat {{min}} dan kam bo'lmasligi kerak",
+        "max": "Qiymat {{max}} dan oshmasligi kerak",
+        "date": "Sanani YYYY-MM-DD ko'rinishida kiriting",
+        "option": "Ro'yxatdan birini tanlang",
+        "maxLength": "{{max}} belgidan oshmasligi kerak",
+        "typeForm": "Bu tur uchun forma olinmadi. Boshqa turni tanlang yoki keyinroq urinib ko'ring.",
+        "language": "Sertifikat tili lug'atdan topilmadi. Administratorga murojaat qiling."
       },
       "created": {
         "title": "Ariza qabul qilindi",
         "text": "To'lov amalga oshirilgach, ariza ekspert tekshiruviga yuboriladi.",
-        "invoice": "Hisob raqami",
-        "amount": "To'lov summasi",
-        "pay": "To'lovga o'tish",
-        "toList": "Sertifikatlarimga o'tish"
+        "toList": "Sertifikatlarimga o'tish",
+        "number": "Ariza raqami"
       },
       "currency": "so'm"
+    },
+    "payment": {
+      "pay": "To'lovga o'tish",
+      "error": "To'lov havolasini olib bo'lmadi. Birozdan so'ng qayta urinib ko'ring."
     }
   }
 }

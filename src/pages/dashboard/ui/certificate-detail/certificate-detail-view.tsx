@@ -164,7 +164,7 @@ export function CertificateDetailView({
           <ExtraDataList
             title={t('dashboard.certificates.detail.extraTitle')}
             extraData={certificate.extra_data}
-            typeId={certificate.type}
+            data={certificate.data}
           />
         </div>
 
