@@ -1,65 +1,52 @@
 import { useTranslation } from 'react-i18next'
 import { generatePath, useParams } from 'react-router'
-import { getExpertName, parseExpertId, useExpertStatistics } from '@/entities/expert'
+import { getExpertName, parseExpertId, useExpert } from '@/entities/expert'
+import { getHttpStatus } from '@/shared/api'
 import { ROUTES } from '@/shared/config'
+import { formatUzPhone } from '@/shared/lib/phone'
 import { CertificatesSkeleton } from './certificates/certificates-states'
 import { DashboardPageHeader } from './dashboard-page-header'
-import { TagList } from './experts/experts-table'
+import { ExpertCertificatesPanel } from './expert-detail/expert-certificates-panel'
+import { ExpertProfileCard } from './expert-detail/expert-profile-card'
 import { LoadErrorState } from './load-error-state'
-import { ReviewCertificatesList } from './review-certificates/review-certificates-list'
 
 export function DashboardExpertDetailPage() {
   const { t } = useTranslation()
   const expertId = parseExpertId(useParams().id)
-  // Alohida "bitta ekspert" endpointi yo'q — ro'yxatdan topiladi (ro'yxat sahifasidan kelinsa keshda bor)
-  const { experts, isLoading, isError, refetch } = useExpertStatistics()
-  const expert = experts.find((item) => item.id === expertId)
+  const { expert, isLoading, isError, error, refetch } = useExpert(expertId)
   const back = { to: ROUTES.experts, label: t('dashboard.experts.detail.back') }
 
   if (expert) {
-    const tags = [...expert.language, ...expert.type]
     const getDetailPath = (id: number) =>
       generatePath(ROUTES.expertCertificate, { expertId: String(expert.id), id: String(id) })
 
     return (
       <div className="mx-auto max-w-7xl">
         <DashboardPageHeader
-          title={getExpertName(expert)}
-          subtitle={[expert.full_name && expert.phone, expert.passport, expert.pnfl]
-            .filter(Boolean)
-            .join(' · ')}
+          title={getExpertName({ ...expert, phone: formatUzPhone(expert.phone) })}
           back={back}
         />
-        {tags.length > 0 && (
-          <div className="mt-4">
-            <TagList items={tags} />
-          </div>
-        )}
 
-        <section className="mt-8">
-          <h2 className="text-heading mb-4 text-[18px] font-bold">
-            {t('dashboard.reviewCertificates.title')}
-          </h2>
-          <ReviewCertificatesList
-            expertId={expert.id}
-            getDetailPath={getDetailPath}
-            // Sonlar ekspert statistikasidan — "Hammasi" uchun mos ko'rsatkich yo'q
-            counts={{
-              new: expert.pending_reviews,
-              approved: expert.approved_certificates,
-              problem: expert.problem_certificates,
-              rejected: expert.rejected_certificates,
-            }}
-          />
-        </section>
+        <div className="mt-8 grid items-start gap-6 lg:grid-cols-[340px_minmax(0,1fr)] xl:grid-cols-[380px_minmax(0,1fr)]">
+          <aside className="lg:sticky lg:top-6">
+            <ExpertProfileCard expert={expert} />
+          </aside>
+
+          <section className="min-w-0">
+            <h2 className="text-heading mb-4 text-[18px] font-bold">
+              {t('dashboard.experts.detail.certificatesTitle')}
+            </h2>
+            <ExpertCertificatesPanel expertId={expert.id} getDetailPath={getDetailPath} />
+          </section>
+        </div>
       </div>
     )
   }
 
   const renderState = () => {
-    if (isLoading) return <CertificatesSkeleton />
+    if (expertId !== null && isLoading) return <CertificatesSkeleton />
 
-    if (isError) {
+    if (isError && getHttpStatus(error) !== 404) {
       return (
         <LoadErrorState
           title={t('dashboard.experts.loadError.title')}

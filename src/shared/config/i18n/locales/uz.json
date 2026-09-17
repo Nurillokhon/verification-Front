@@ -317,8 +317,7 @@
       "tabs": {
         "label": "Profil bo'limlari",
         "personal": "Shaxsiy ma'lumotlar",
-        "security": "Xavfsizlik va parol",
-        "certificates": "Mening sertifikatlarim"
+        "security": "Xavfsizlik va parol"
       },
       "gender": {
         "male": "Erkak",
@@ -354,15 +353,6 @@
           "mismatch": "Parollar mos kelmadi",
           "apiFallback": "Parolni o'zgartirib bo'lmadi. Birozdan so'ng qayta urinib ko'ring."
         }
-      },
-      "certificates": {
-        "title": "Sertifikatlar statistikasi",
-        "subtitle": "Platformaga yuklangan sertifikatlaringiz holati",
-        "total": "Jami sertifikatlar",
-        "new": "Yangi",
-        "approved": "Tasdiqlangan",
-        "problem": "Muammoli",
-        "viewAll": "Barcha sertifikatlarni ko'rish"
       }
     },
     "certificates": {
@@ -462,7 +452,20 @@
         "notFound": {
           "title": "Ekspert topilmadi",
           "text": "Ekspert mavjud emas yoki ro'yxatdan o'chirilgan."
-        }
+        },
+        "certificatesTitle": "Tekshirgan sertifikatlari",
+        "edit": "Tahrirlash",
+        "active": "Faol",
+        "inactive": "Nofaol",
+        "phone": "Telefon",
+        "passport": "Pasport",
+        "pnfl": "JShShIR",
+        "createdAt": "Qo'shilgan sana",
+        "total": "Jami tekshirgan",
+        "languages": "Tillar",
+        "types": "Sertifikat turlari",
+        "reviewedAt": "Tekshirilgan vaqti",
+        "searchPlaceholder": "Sertifikat raqami bo'yicha"
       },
       "certificate": {
         "back": "Ekspert sahifasiga qaytish"
@@ -479,6 +482,43 @@
         "title": "Ekspertlar ro'yxatini yuklab bo'lmadi",
         "text": "Internet aloqasini tekshiring va qayta urinib ko'ring.",
         "retry": "Qayta urinish"
+      },
+      "create": {
+        "open": "Ekspert qo'shish",
+        "title": "Yangi ekspert",
+        "subtitle": "Shaxs JShShIR va pasport bo'yicha davlat bazasidan tasdiqlanadi.",
+        "phone": "Telefon raqami",
+        "pnfl": "JShShIR",
+        "pnflHint": "14 xonali shaxsiy identifikatsiya raqami",
+        "passport": "Pasport seriyasi va raqami",
+        "password": "Parol",
+        "passwordHint": "Kamida 8 belgi",
+        "languages": "Tillar",
+        "types": "Sertifikat turlari",
+        "selectPlaceholder": "Tanlang",
+        "cancel": "Bekor qilish",
+        "submit": "Yaratish",
+        "success": "Ekspert muvaffaqiyatli yaratildi",
+        "errors": {
+          "required": "Maydonni to'ldiring",
+          "phone": "Telefon raqamini to'liq kiriting",
+          "pnfl": "JShShIR 14 ta raqamdan iborat bo'lishi kerak",
+          "passport": "Format: AA1234567",
+          "password": "Parol kamida 8 belgidan iborat bo'lishi kerak",
+          "apiFallback": "Ekspertni yaratib bo'lmadi. Qayta urinib ko'ring."
+        }
+      },
+      "edit": {
+        "title": "Ma'lumotlarni tahrirlash",
+        "password": "Yangi parol",
+        "passwordHint": "Bo'sh qoldirilsa parol o'zgarmaydi",
+        "isActive": "Faol ekspert",
+        "isActiveHint": "O'chirilsa ekspert tizimga kira olmaydi, tekshiruv tarixi saqlanadi",
+        "submit": "Saqlash",
+        "success": "Ekspert ma'lumotlari saqlandi",
+        "errors": {
+          "apiFallback": "Ma'lumotlarni saqlab bo'lmadi. Qayta urinib ko'ring."
+        }
       }
     },
     "expertDashboard": {

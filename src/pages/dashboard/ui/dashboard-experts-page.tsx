@@ -1,8 +1,10 @@
-import { Search } from 'lucide-react'
+import { Search, UserPlus } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useExpertStatistics, type ExpertStatistics } from '@/entities/expert'
+import { CreateExpertDrawer } from '@/features/create-expert'
 import { cn } from '@/shared/lib/cn'
+import { Button } from '@/shared/ui'
 import { DashboardPageHeader } from './dashboard-page-header'
 import { ExpertsEmptyState, ExpertsSkeleton } from './experts/experts-states'
 import { ExpertsTable } from './experts/experts-table'
@@ -18,6 +20,7 @@ function matchesQuery(expert: ExpertStatistics, query: string) {
 export function DashboardExpertsPage() {
   const { t } = useTranslation()
   const [searchInput, setSearchInput] = useState('')
+  const [isCreateOpen, setIsCreateOpen] = useState(false)
   const query = searchInput.trim().toLowerCase()
 
   const { experts, isLoading, isFetching, isError, refetch } = useExpertStatistics()
@@ -55,6 +58,12 @@ export function DashboardExpertsPage() {
       <DashboardPageHeader
         title={t('dashboard.pages.experts.title')}
         subtitle={t('dashboard.experts.subtitle')}
+        actions={
+          <Button type="button" onClick={() => setIsCreateOpen(true)}>
+            <UserPlus className="size-4.5 shrink-0" strokeWidth={2.2} aria-hidden="true" />
+            {t('dashboard.experts.create.open')}
+          </Button>
+        }
       />
 
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -80,6 +89,8 @@ export function DashboardExpertsPage() {
       </div>
 
       <div className="mt-6">{renderContent()}</div>
+
+      <CreateExpertDrawer open={isCreateOpen} onClose={() => setIsCreateOpen(false)} />
     </div>
   )
 }

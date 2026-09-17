@@ -23,6 +23,7 @@ import {
   buttonVariants,
   FileField,
   FormAlert,
+  DateField,
   SelectField,
   TextField,
 } from '@/shared/ui'
@@ -189,15 +190,14 @@ export function CertificateForm({
             options={toSelectOptions(types)}
             disabled={!languageId}
             value={values.type}
-            onChange={(event) => changeType(event.target.value)}
+            onChange={changeType}
           />
-          <TextField
-            type="date"
+          <DateField
             label={t('dashboard.certificateForm.fields.issueDate')}
             icon={CalendarDays}
             error={getError('issueDate')}
             value={values.issueDate}
-            onChange={(event) => updateField('issueDate', event.target.value)}
+            onChange={(value) => updateField('issueDate', value)}
           />
 
           {/* Quyidagi maydonlarni tur formasi yoqadi yoki o'chiradi; yorliqni ham backend beradi */}
@@ -209,17 +209,16 @@ export function CertificateForm({
               placeholder={selectPlaceholder}
               options={toSelectOptions(degrees)}
               value={values.degree}
-              onChange={(event) => updateField('degree', event.target.value)}
+              onChange={(value) => updateField('degree', value)}
             />
           )}
           {examDateRule.enabled && (
-            <TextField
-              type="date"
+            <DateField
               label={examDateRule.label || t('dashboard.certificateForm.fields.examDate')}
               icon={CalendarDays}
               error={getError('examDate')}
               value={values.examDate}
-              onChange={(event) => updateField('examDate', event.target.value)}
+              onChange={(value) => updateField('examDate', value)}
             />
           )}
           {examPlaceRule.enabled && (

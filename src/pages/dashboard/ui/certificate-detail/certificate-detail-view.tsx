@@ -109,7 +109,9 @@ export function CertificateDetailView({
 
       <div className="mt-8 grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] xl:gap-8">
         <div className="min-w-0 space-y-6">
-          {certificate.comment && (
+          {/* Izoh nomzodga yuborilgan SMS matni ("Sizning sertifikatingiz...") — admin
+              sahifasida chalg'itadi, u yerda xabar holatlar tarixida ko'rinadi */}
+          {!showCandidate && certificate.comment && (
             <div
               role="note"
               className={cn(

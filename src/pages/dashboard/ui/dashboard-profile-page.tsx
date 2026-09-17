@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUserProfile } from "@/entities/user";
 import { ChangePasswordForm } from "@/features/change-password";
-import { CertificatesPanel } from "./profile/certificates-panel";
 import { PanelHeader } from "./profile/panel-header";
 import { PersonalDataPanel } from "./profile/personal-data-panel";
 import { ProfilePageHeader } from "./profile/profile-page-header";
@@ -51,9 +50,6 @@ export function DashboardProfilePage() {
                   <ChangePasswordForm />
                 </div>
               </>
-            )}
-            {activeTab === "certificates" && (
-              <CertificatesPanel profile={profile} />
             )}
           </div>
         </section>

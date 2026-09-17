@@ -253,8 +253,8 @@ export function ReviewActionsPanel({
                 label: message.name,
               }))}
               value={smsMessageId}
-              onChange={(event) => {
-                setSmsMessageId(event.target.value);
+              onChange={(value) => {
+                setSmsMessageId(value);
                 setError(null);
               }}
             />

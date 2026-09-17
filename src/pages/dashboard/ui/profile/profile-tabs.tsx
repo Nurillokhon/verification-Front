@@ -1,6 +1,6 @@
 /** @format */
 
-import { FileText, Lock, UserRound, type LucideIcon } from "lucide-react";
+import { Lock, UserRound, type LucideIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/shared/lib/cn";
 import { getTabId, getTabPanelId, type ProfileTab } from "./profile-tab";
@@ -8,7 +8,6 @@ import { getTabId, getTabPanelId, type ProfileTab } from "./profile-tab";
 const TABS: ReadonlyArray<{ id: ProfileTab; icon: LucideIcon }> = [
   { id: "personal", icon: UserRound },
   { id: "security", icon: Lock },
-  { id: "certificates", icon: FileText },
 ];
 
 type ProfileTabsProps = {

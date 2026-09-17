@@ -41,6 +41,14 @@ body {
   outline: none;
 }
 
+/* antd borderless Select/DatePicker fokusda o'zining ichki outline'ini chizadi —
+   halqa o'ramda chizilgani uchun ikkinchi ramka chiqmasin. */
+[data-field-control] .ant-picker,
+[data-field-control] .ant-select {
+  outline: none !important;
+  padding-inline: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

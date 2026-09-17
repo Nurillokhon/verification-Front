@@ -12,6 +12,7 @@ export {
   canEditCertificate,
   getCertificateFileUrl,
   getStatusTone,
+  normalizeStatus,
   isCertificatePaid,
   parseCertificateId,
   parseExtraData,

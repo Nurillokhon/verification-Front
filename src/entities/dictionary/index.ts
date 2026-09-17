@@ -12,6 +12,7 @@ export {
 } from './model/types'
 export {
   DEFAULT_LANGUAGE_CODE,
+  useAllCertificateTypes,
   useCertificateTypes,
   useDefaultLanguage,
   useDegrees,

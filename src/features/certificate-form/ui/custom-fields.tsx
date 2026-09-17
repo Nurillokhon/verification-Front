@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { toOptionsFromStrings, type TypeFormCustomField } from '@/entities/dictionary'
-import { SelectField, TextField } from '@/shared/ui'
+import { DateField, SelectField, TextField } from '@/shared/ui'
 import type { CertificateFormErrors } from '../model/certificate-form'
 import { getCustomErrorKey } from '../model/type-form'
 
@@ -12,7 +12,7 @@ type CustomFieldsProps = {
   onChange: (key: string, value: string) => void
 }
 
-const INPUT_TYPES = { text: 'text', number: 'number', date: 'date' } as const
+const INPUT_TYPES = { text: 'text', number: 'number' } as const
 
 /** Tur formasining `custom_fields` bo'limi — matn, son, sana yoki tanlash maydonlari. */
 export function CustomFields({ fields, values, errors, onChange }: CustomFieldsProps) {
@@ -34,7 +34,19 @@ export function CustomFields({ fields, values, errors, onChange }: CustomFieldsP
               placeholder={t('dashboard.certificateForm.fields.select')}
               options={toOptionsFromStrings(field.options)}
               value={value}
-              onChange={(event) => onChange(field.key, event.target.value)}
+              onChange={(next) => onChange(field.key, next)}
+            />
+          )
+        }
+
+        if (field.kind === 'date') {
+          return (
+            <DateField
+              key={field.key}
+              label={field.label}
+              error={message}
+              value={value}
+              onChange={(next) => onChange(field.key, next)}
             />
           )
         }

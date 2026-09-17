@@ -1,3 +1,9 @@
-export type { ExpertStatistics } from './model/types'
+export type { Expert, ExpertCertificate, ExpertRef, ExpertStatistics } from './model/types'
 export { getExpertName, parseExpertId } from './model/expert'
-export { useExpertStatistics } from './api/expert-api'
+export {
+  EXPERT_STATISTICS_ENDPOINT,
+  getExpertEndpoint,
+  useExpert,
+  useExpertCertificates,
+  useExpertStatistics,
+} from './api/expert-api'

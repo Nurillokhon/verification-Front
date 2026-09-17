@@ -62,6 +62,16 @@ export function useCertificateTypes(languageId?: string) {
   return { types: data ?? EMPTY_ITEMS, isLoading }
 }
 
+/** Til filtrisiz barcha faol sertifikat turlari — masalan, ekspertga tur biriktirish uchun. */
+export function useAllCertificateTypes({ enabled = true }: { enabled?: boolean } = {}) {
+  const { data, isLoading } = useGetRequest<DictionaryItem[]>({
+    url: ENDPOINTS.type,
+    options: { staleTime: DICTIONARY_STALE_TIME, enabled },
+  })
+
+  return { types: data ?? EMPTY_ITEMS, isLoading }
+}
+
 // swagger: degree sahifalangan javob qaytaradi
 export function useDegrees() {
   const { data, isLoading } = useGetRequest<Paginated<DictionaryItem>>({
