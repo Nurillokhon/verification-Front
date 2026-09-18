@@ -1,5 +1,6 @@
 import { keepPreviousData, useQueryClient } from '@tanstack/react-query'
 import { useGetRequest, useMutateRequest, type Paginated } from '@/shared/api'
+import type { SectionAdmin } from '../model/admin-types'
 
 /**
  * Lug'atlarni boshqarish endpointlari. Ochiq `/dictionary/<name>/` ro'yxatlaridan
@@ -19,6 +20,8 @@ export type DictionaryResource = keyof typeof ADMIN_ENDPOINTS
 export const DICTIONARY_RESOURCES = Object.keys(ADMIN_ENDPOINTS) as DictionaryResource[]
 
 export const DICTIONARY_PAGE_SIZE = 20
+
+const EMPTY_SECTIONS: SectionAdmin[] = []
 
 function getItemUrl(resource: DictionaryResource, id: number) {
   return `${ADMIN_ENDPOINTS[resource]}${id}/`
@@ -81,4 +84,17 @@ export function useDictionaryMutations(resource: DictionaryResource) {
     hideItem: (id: number) => run({ url: getItemUrl(resource, id), method: 'DELETE' }),
     isPending,
   }
+}
+
+// Tur formasi quruvchisida bo'lim tanlanadi — select ichida sahifalash kerak emas
+const ALL_SECTIONS_PARAMS = { is_active: true, page_size: 1000 }
+
+/** Faol bo'limlar to'liq ro'yxati — tur formasiga ball maydoni qo'shish uchun. */
+export function useActiveSections() {
+  const { data, isLoading } = useGetRequest<Paginated<SectionAdmin>>({
+    url: ADMIN_ENDPOINTS.sections,
+    params: ALL_SECTIONS_PARAMS,
+  })
+
+  return { sections: data?.results ?? EMPTY_SECTIONS, isLoading }
 }

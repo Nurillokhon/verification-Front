@@ -856,6 +856,78 @@
         "selectPrompt": "Tur tanlang — nomzod ariza yuborayotganda ko'radigan forma shu yerda chiziladi.",
         "notConfigured": "Bu tur uchun forma alohida sozlanmagan. Quyidagi ball maydonlari turga biriktirilgan bo'limlardan olingan.",
         "legend": "Forma ko'rinishi (faqat ko'rish uchun)"
+      },
+      "editor": {
+        "open": "Formani tahrirlash",
+        "typeLocked": "Tahrirlash tugamaguncha tur almashtirilmaydi",
+        "livePreview": "Nomzod ko'radigan ko'rinish",
+        "core": {
+          "title": "Asosiy maydonlar",
+          "description": "Qaysi maydon formada ko'rinishi, majburiyligi va nomi. O'chirilgan maydon nomzoddan so'ralmaydi.",
+          "names": {
+            "degree": "Daraja",
+            "exam_date": "Imtihon sanasi",
+            "exam_place": "Imtihon joyi"
+          }
+        },
+        "scores": {
+          "title": "Ball maydonlari",
+          "description": "Har bir maydon bitta bo'limga bog'lanadi. Saqlanganda turning bo'limlari shu ro'yxatga tenglashtiriladi.",
+          "empty": "Ball maydonlari yo'q — nomzoddan ball so'ralmaydi.",
+          "untitled": "Yangi ball maydoni",
+          "letterHint": "Harfli ball (masalan, B2) — chegara belgilanmaydi"
+        },
+        "custom": {
+          "title": "Qo'shimcha maydonlar",
+          "description": "Turga xos qo'shimcha ma'lumotlar. Qiymatlar arizada kalit bo'yicha saqlanadi.",
+          "empty": "Qo'shimcha maydonlar yo'q.",
+          "untitled": "Yangi maydon",
+          "keyHint": "Lotin kichik harflari, raqam va _ (masalan, passport_series)",
+          "optionsHint": "Har bir variantni yangi qatorga yozing",
+          "maxLengthHint": "Ixtiyoriy. Bo'sh qolsa cheklanmaydi."
+        },
+        "fields": {
+          "label": "Formadagi nomi",
+          "enabled": "Ko'rsatilsin",
+          "required": "Majburiy",
+          "section": "Bo'lim",
+          "scoreType": "Ball turi",
+          "min": "Eng kichik qiymat",
+          "max": "Eng katta qiymat",
+          "kind": "Maydon turi",
+          "key": "Kalit",
+          "options": "Variantlar",
+          "maxLength": "Eng ko'p belgilar soni"
+        },
+        "scoreTypes": {
+          "decimal": "Kasr son (6.5)",
+          "integer": "Butun son (90)",
+          "letter": "Harf (B2)"
+        },
+        "kinds": {
+          "text": "Matn",
+          "number": "Son",
+          "date": "Sana",
+          "select": "Tanlash"
+        },
+        "actions": {
+          "addScore": "Ball qo'shish",
+          "addCustom": "Maydon qo'shish",
+          "moveUp": "Yuqoriga surish",
+          "moveDown": "Pastga surish",
+          "remove": "O'chirish"
+        },
+        "errors": {
+          "required": "Bu maydonni to'ldiring",
+          "number": "Son kiriting",
+          "range": "Eng kichik qiymatdan kichik bo'lmasin",
+          "positiveInteger": "Noldan katta butun son kiriting",
+          "duplicateSection": "Bu bo'lim allaqachon qo'shilgan",
+          "keyFormat": "Faqat lotin kichik harflari, raqam va _ — harf bilan boshlansin",
+          "duplicateKey": "Bu kalit boshqa maydonda ishlatilgan",
+          "options": "Kamida bitta variant kiriting",
+          "fixFields": "Belgilangan maydonlarni to'g'rilang"
+        }
       }
     }
   }

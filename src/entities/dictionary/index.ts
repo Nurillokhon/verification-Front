@@ -12,6 +12,7 @@ export {
 export {
   DICTIONARY_PAGE_SIZE,
   DICTIONARY_RESOURCES,
+  useActiveSections,
   useDictionaryList,
   useDictionaryMutations,
   type DictionaryResource,
@@ -23,6 +24,7 @@ export {
   type DictionaryItem,
   type LanguageItem,
   type TypeForm,
+  type TypeFormCore,
   type TypeFormCoreName,
   type TypeFormCoreRule,
   type TypeFormCustomField,
