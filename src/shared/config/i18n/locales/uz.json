@@ -554,6 +554,33 @@
         "text": "Hisobingiz uchun statistika hali shakllanmagan."
       }
     },
+    "adminDashboard": {
+      "subtitle": "Platformaning umumiy ko'rsatkichlari",
+      "stats": {
+        "candidates": "Jami nomzodlar",
+        "certificates": "Jami sertifikatlar",
+        "paid": "To'langan sertifikatlar",
+        "paidShare": "Jami sertifikatlarning {{percent}}%",
+        "revenue": "Jami tushum",
+        "currency": "so'm"
+      },
+      "monthly": {
+        "title": "Oylik sertifikatlar",
+        "subtitle": "Oxirgi 12 oyda yuborilgan sertifikatlar soni",
+        "total": "12 oyda jami: {{count}}",
+        "showTable": "Jadval ko'rinishi",
+        "showChart": "Grafik ko'rinishi",
+        "month": "Oy",
+        "count": "Soni",
+        "chartLabel": "Oxirgi 12 oy bo'yicha sertifikatlar soni ustunli grafigi",
+        "empty": "Hozircha oylik ma'lumot yo'q"
+      },
+      "loadError": {
+        "title": "Statistikani yuklab bo'lmadi",
+        "text": "Internet aloqasini tekshiring va qayta urinib ko'ring.",
+        "retry": "Qayta urinish"
+      }
+    },
     "review": {
       "title": "Sertifikat #{{number}}",
       "queue": {
@@ -726,6 +753,110 @@
     "payment": {
       "pay": "To'lovga o'tish",
       "error": "To'lov havolasini olib bo'lmadi. Birozdan so'ng qayta urinib ko'ring."
+    },
+    "forms": {
+      "subtitle": "Formalar nimalardan tuzilishini boshqaring va nomzod ko'radigan ko'rinishni tekshiring",
+      "tabs": {
+        "label": "Formalar sahifasi bo'limlari",
+        "settings": "Sozlamalar",
+        "preview": "Formani ko'rish"
+      },
+      "resourceNavLabel": "Lug'atlar",
+      "searchLabel": "Lug'at bo'yicha qidirish",
+      "searchPlaceholder": "Nomi bo'yicha qidirish",
+      "resources": {
+        "types": {
+          "title": "Sertifikat turlari",
+          "item": "sertifikat turi",
+          "description": "Nomzod ariza yuborayotganda tanlaydigan turlar. Amal qilish muddati sertifikatning tugash sanasini hisoblashda ishlatiladi."
+        },
+        "sections": {
+          "title": "Bo'limlar",
+          "item": "bo'lim",
+          "description": "Ballar so'raladigan bo'limlar (masalan, Listening, Reading). Turga biriktirish tur formasi saqlanganda avtomatik bo'ladi."
+        },
+        "degrees": {
+          "title": "Darajalar",
+          "item": "daraja",
+          "description": "Sertifikat darajalari — tur formasida “Daraja” maydoni yoqilgan bo'lsa ko'rinadi."
+        },
+        "languages": {
+          "title": "Tillar",
+          "item": "til",
+          "description": "Sertifikat tillari. Kodi tizim ichida ishlatiladi, shuning uchun uni o'zgartirishda ehtiyot bo'ling."
+        },
+        "smsMessages": {
+          "title": "SMS xabarlar",
+          "item": "SMS xabar",
+          "description": "Ekspert arizani tekshirganda tanlaydigan tayyor izohlar. Tizim xabarlarining kodi o'zgartirilmaydi."
+        },
+        "statuses": {
+          "title": "Statuslar",
+          "item": "status",
+          "description": "Ariza statuslari. Tizim kodi o'zgarmaydi — faqat foydalanuvchiga ko'rinadigan nomini belgilash mumkin."
+        }
+      },
+      "fields": {
+        "name": "Nomi",
+        "code": "Kodi",
+        "codeHint": "Xalqaro til kodi, masalan: en, ru, uz",
+        "description": "Tavsifi",
+        "period": "Amal qilish muddati",
+        "periodHint": "Yilda. Sertifikatning tugash sanasi shu asosda hisoblanadi.",
+        "messageText": "Xabar matni",
+        "smsCodeHint": "Tizim kodi — qaysi holatda bu xabar yuborilishini belgilaydi",
+        "systemCode": "Tizim kodi",
+        "systemCodeHint": "Tizim belgilaydi va o'zgartirilmaydi",
+        "label": "Ko'rinadigan nomi"
+      },
+      "columns": {
+        "state": "Holati",
+        "actions": "Amallar"
+      },
+      "state": {
+        "active": "Faol",
+        "hidden": "Yashirilgan"
+      },
+      "actions": {
+        "create": "Qo'shish",
+        "edit": "Tahrirlash",
+        "hide": "Yashirish",
+        "restore": "Qaytarish"
+      },
+      "drawer": {
+        "createTitle": "Yangi {{resource}}",
+        "editTitle": "Tahrirlash: {{resource}}",
+        "cancel": "Bekor qilish",
+        "submit": "Saqlash",
+        "selectPlaceholder": "Tanlang"
+      },
+      "errors": {
+        "required": "Bu maydonni to'ldiring",
+        "positiveInteger": "Noldan katta butun son kiriting",
+        "apiFallback": "So'rovni bajarib bo'lmadi. Birozdan so'ng qayta urinib ko'ring."
+      },
+      "empty": {
+        "title": "Bu lug'at hali to'ldirilmagan",
+        "text": "Birinchi yozuvni qo'shish uchun yuqoridagi tugmani bosing.",
+        "searchTitle": "Hech narsa topilmadi",
+        "searchText": "Boshqa so'z bilan qidirib ko'ring yoki qidiruvni tozalang."
+      },
+      "loadError": {
+        "text": "Lug'atni yuklab bo'lmadi. Internet aloqasini tekshirib, qayta urinib ko'ring.",
+        "retry": "Qayta urinish"
+      },
+      "toast": {
+        "saved": "Saqlandi",
+        "hidden": "Yozuv yashirildi",
+        "restored": "Yozuv qaytarildi"
+      },
+      "preview": {
+        "typeLabel": "Sertifikat turi",
+        "typeHint": "Formani ko'rish uchun turni tanlang",
+        "selectPrompt": "Tur tanlang — nomzod ariza yuborayotganda ko'radigan forma shu yerda chiziladi.",
+        "notConfigured": "Bu tur uchun forma alohida sozlanmagan. Quyidagi ball maydonlari turga biriktirilgan bo'limlardan olingan.",
+        "legend": "Forma ko'rinishi (faqat ko'rish uchun)"
+      }
     }
   }
 }

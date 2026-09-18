@@ -76,7 +76,7 @@ const ROLE_MAIN_ITEM_KEYS: Record<UserRole, readonly NavItemKey[]> = {
 const ROLE_SETTINGS_ITEM_KEYS: Record<UserRole, readonly NavItemKey[]> = {
   candidate: ["profile"],
   expert: ["profile"],
-  admin: ["analytics", "profile"],
+  admin: ["profile"],
 };
 
 export type DashboardMenu = {
