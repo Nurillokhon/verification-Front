@@ -1,3 +1,5 @@
+export { BrandMark } from './brand-mark'
+export { BrandWordmark } from './brand-wordmark'
 export { Button, buttonVariants, type ButtonSize, type ButtonVariant } from './button'
 export { Container } from './container'
 export { DateField } from './date-field'

@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { ROUTES } from "@/shared/config";
 import {
+  BrandMark,
+  BrandWordmark,
   buttonVariants,
   Container,
   LanguageSwitcher,
@@ -23,10 +25,12 @@ export function SiteHeader() {
             nav o'zi ko'taradi (pastdagi responsive tor'lashtirishlar shu uchun). */}
         <Link
           to={ROUTES.home}
-          className="text-heading shrink-0 text-[15px] font-extrabold tracking-tight whitespace-nowrap sm:text-[17px]"
+          className="flex shrink-0 items-center gap-2.5 whitespace-nowrap"
         >
-          {/* Brend nomi — tarjima qilinmaydi */}
-          SERTIFIKAT
+          <BrandMark className="w-7 sm:w-8" />
+          {/* Brend logotipi — tarjima qilinmaydi */}
+          <BrandWordmark size="sm" className="sm:hidden" />
+          <BrandWordmark size="md" className="max-sm:hidden" />
         </Link>
 
         <nav className="flex items-center gap-1 sm:gap-2">
