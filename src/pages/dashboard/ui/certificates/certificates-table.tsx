@@ -11,13 +11,11 @@ import {
 } from "@/entities/certificate";
 import { ROUTES } from "@/shared/config";
 import { formatApiDate } from "@/shared/lib/format";
+import { TableHeadRow, TableRow, Td, Th } from "@/shared/ui";
 
 function getDetailPath(id: number) {
   return generatePath(ROUTES.certificateDetail, { id: String(id) });
 }
-
-const HEAD_CELL_CLASS_NAME = "px-5 py-3.5 font-bold";
-const CELL_CLASS_NAME = "text-body px-5 py-4";
 
 export function CertificatesTable({
   certificates,
@@ -32,72 +30,47 @@ export function CertificatesTable({
       <div className="hidden overflow-x-auto md:block">
         <table className="w-full min-w-190 text-left text-[14px]">
           <thead>
-            <tr className="border-line text-neutral border-b text-[12px] tracking-wide uppercase">
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t("dashboard.certificates.columns.number")}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t("dashboard.certificates.columns.type")}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t("dashboard.certificates.columns.language")}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t("dashboard.certificates.columns.degree")}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t("dashboard.certificates.columns.issueDate")}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t("dashboard.certificates.columns.status")}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t("dashboard.certificates.columns.payment")}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
+            <TableHeadRow>
+              <Th>{t("dashboard.certificates.columns.number")}</Th>
+              <Th>{t("dashboard.certificates.columns.type")}</Th>
+              <Th>{t("dashboard.certificates.columns.language")}</Th>
+              <Th>{t("dashboard.certificates.columns.degree")}</Th>
+              <Th>{t("dashboard.certificates.columns.issueDate")}</Th>
+              <Th>{t("dashboard.certificates.columns.status")}</Th>
+              <Th>{t("dashboard.certificates.columns.payment")}</Th>
+              <Th>
                 <span className="sr-only">
                   {t("dashboard.certificates.columns.actions")}
                 </span>
-              </th>
-            </tr>
+              </Th>
+            </TableHeadRow>
           </thead>
           <tbody className="divide-line divide-y">
             {certificates.map((certificate) => (
-              <tr
-                key={certificate.id}
-                className="hover:bg-surface-sky transition-colors"
-              >
-                <td className="px-5 py-4">
+              <TableRow key={certificate.id}>
+                <Td>
                   <Link
                     to={getDetailPath(certificate.id)}
                     className="text-heading hover:text-primary font-bold tabular-nums transition-colors"
                   >
                     {certificate.number}
                   </Link>
-                </td>
-                <td className={CELL_CLASS_NAME}>
-                  {certificate.type_name || "—"}
-                </td>
-                <td className={CELL_CLASS_NAME}>
-                  {certificate.language_name || "—"}
-                </td>
-                <td className={CELL_CLASS_NAME}>
-                  {certificate.degree_name || "—"}
-                </td>
-                <td
-                  className={`${CELL_CLASS_NAME} whitespace-nowrap tabular-nums`}
-                >
+                </Td>
+                <Td>{certificate.type_name || "—"}</Td>
+                <Td>{certificate.language_name || "—"}</Td>
+                <Td>{certificate.degree_name || "—"}</Td>
+                <Td className="whitespace-nowrap tabular-nums">
                   {formatApiDate(certificate.issue_date) ?? "—"}
-                </td>
-                <td className="px-5 py-4">
+                </Td>
+                <Td>
                   <CertificateStatusBadge status={certificate.status} />
-                </td>
-                <td className="px-5 py-4">
+                </Td>
+                <Td>
                   <CertificatePaymentBadge
                     isPaid={isCertificatePaid(certificate)}
                   />
-                </td>
-                <td className="px-5 py-4 text-right">
+                </Td>
+                <Td className="text-right">
                   <Link
                     to={getDetailPath(certificate.id)}
                     aria-label={`${t("dashboard.certificates.view")}: ${certificate.number}`}
@@ -110,8 +83,8 @@ export function CertificatesTable({
                     />
                     {t("dashboard.certificates.view")}
                   </Link>
-                </td>
-              </tr>
+                </Td>
+              </TableRow>
             ))}
           </tbody>
         </table>

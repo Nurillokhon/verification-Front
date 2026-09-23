@@ -1,5 +1,5 @@
 import { message } from 'antd'
-import { Plus, Search } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -10,9 +10,10 @@ import {
   type DictionaryResource,
 } from '@/entities/dictionary'
 import { getApiErrorMessage } from '@/shared/api'
-import { useDebouncedValue } from '@/shared/lib/debounce'
+import { SEARCH_DEBOUNCE_MS } from '@/shared/config'
 import { cn } from '@/shared/lib/cn'
-import { Button, Pagination } from '@/shared/ui'
+import { useDebouncedValue } from '@/shared/lib/debounce'
+import { Button, Pagination, SearchInput, TableSkeleton } from '@/shared/ui'
 import {
   DICTIONARY_RESOURCE_CONFIG,
   isHidden,
@@ -20,9 +21,7 @@ import {
 } from '../model/resources'
 import { DictionaryFormDrawer } from './dictionary-form-drawer'
 import { DictionaryTable } from './dictionary-table'
-import { DictionaryEmptyState, DictionarySkeleton } from './dictionary-states'
-
-const SEARCH_DELAY_MS = 350
+import { DictionaryEmptyState } from './dictionary-states'
 
 /** Yopiq drawer, tahrirlanayotgan qator yoki yaratish rejimi. */
 type DrawerState = { row?: DictionaryRow } | null
@@ -36,7 +35,7 @@ export function DictionaryAdminPanel() {
   const [page, setPage] = useState(1)
   const [drawer, setDrawer] = useState<DrawerState>(null)
 
-  const search = useDebouncedValue(searchInput.trim(), SEARCH_DELAY_MS)
+  const search = useDebouncedValue(searchInput.trim(), SEARCH_DEBOUNCE_MS)
   const config = DICTIONARY_RESOURCE_CONFIG[resource]
 
   const { items, count, isLoading, isFetching, isError, refetch } = useDictionaryList<DictionaryRow>(
@@ -80,7 +79,7 @@ export function DictionaryAdminPanel() {
   const totalPages = Math.ceil(count / DICTIONARY_PAGE_SIZE)
 
   const renderRows = () => {
-    if (isLoading) return <DictionarySkeleton />
+    if (isLoading) return <TableSkeleton rows={6} columns={2} variant="inline" />
 
     if (isError && !items) {
       return (
@@ -140,20 +139,13 @@ export function DictionaryAdminPanel() {
 
       <div className="min-w-0">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div
-            data-field-control
-            className="bg-surface border-line focus-within:ring-primary flex h-12 items-center gap-3 rounded-xl border px-4 focus-within:ring-2 sm:w-full sm:max-w-sm"
-          >
-            <Search className="text-neutral size-4.5 shrink-0" strokeWidth={2} aria-hidden="true" />
-            <input
-              type="search"
-              aria-label={t('dashboard.forms.searchLabel')}
-              placeholder={t('dashboard.forms.searchPlaceholder')}
-              value={searchInput}
-              onChange={(event) => changeSearch(event.target.value)}
-              className="text-heading placeholder:text-neutral/70 h-full min-w-0 flex-1 bg-transparent text-[15px] outline-none"
-            />
-          </div>
+          <SearchInput
+            className="sm:w-full sm:max-w-sm"
+            label={t('dashboard.forms.searchLabel')}
+            placeholder={t('dashboard.forms.searchPlaceholder')}
+            value={searchInput}
+            onChange={changeSearch}
+          />
 
           {config.canCreate && (
             <Button type="button" onClick={() => setDrawer({})}>

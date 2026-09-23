@@ -1,42 +1,14 @@
-import { FileText, Search, SearchX } from 'lucide-react'
-import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router'
 import { useCertificates } from '@/entities/certificate'
+import { LIST_PAGE_SIZE } from '@/shared/config'
 import { cn } from '@/shared/lib/cn'
-import { useDebouncedValue } from '@/shared/lib/debounce'
-import { Pagination } from '@/shared/ui'
-import { CertificatesSkeleton } from '../certificates/certificates-states'
+import { useUrlSearchState } from '@/shared/lib/url-state'
+import { Pagination, SearchInput, TableSkeleton } from '@/shared/ui'
 import { LoadErrorState } from '../load-error-state'
 import { parseCertificateStatusTab, type CertificateStatusTab } from './certificate-status-tab'
 import { CertificateStatusTabs } from './certificate-status-tabs'
+import { ReviewCertificatesEmptyState } from './review-certificates-states'
 import { ReviewCertificatesTable } from './review-certificates-table'
-
-const PAGE_SIZE = 10
-const SEARCH_DEBOUNCE_MS = 400
-
-function ReviewCertificatesEmptyState({ hasQuery }: { hasQuery: boolean }) {
-  const { t } = useTranslation()
-  const Icon = hasQuery ? SearchX : FileText
-
-  return (
-    <div className="bg-surface shadow-card border-line flex flex-col items-center rounded-3xl border px-6 py-14 text-center">
-      <span className="bg-primary-soft text-primary flex size-14 items-center justify-center rounded-2xl">
-        <Icon className="size-7" strokeWidth={2} aria-hidden="true" />
-      </span>
-      <h2 className="text-heading mt-5 text-[18px] font-bold">
-        {hasQuery
-          ? t('dashboard.certificates.noResults.title')
-          : t('dashboard.reviewCertificates.empty.title')}
-      </h2>
-      <p className="text-body mt-2 max-w-sm text-[14px]">
-        {hasQuery
-          ? t('dashboard.certificates.noResults.text')
-          : t('dashboard.reviewCertificates.empty.text')}
-      </p>
-    </div>
-  )
-}
 
 type ReviewCertificatesListProps = {
   getDetailPath: (id: number) => string
@@ -59,62 +31,25 @@ export function ReviewCertificatesList({
 }: ReviewCertificatesListProps) {
   const { t } = useTranslation()
   // Tab, sahifa va qidiruv URL'da saqlanadi — detal sahifasidan qaytilganda joy yo'qolmaydi
-  const [searchParams, setSearchParams] = useSearchParams()
-  const page = Math.max(1, Number(searchParams.get('page')) || 1)
-  const query = searchParams.get('q') ?? ''
+  const { page, query, searchInput, setSearchInput, setParam, goToPage, searchParams } =
+    useUrlSearchState()
   const tab = parseCertificateStatusTab(searchParams.get('status'))
-  const [searchInput, setSearchInput] = useState(query)
-  const debouncedSearch = useDebouncedValue(searchInput.trim(), SEARCH_DEBOUNCE_MS)
-
-  useEffect(() => {
-    if (debouncedSearch === query) return
-
-    setSearchParams(
-      (prev) => {
-        const next = new URLSearchParams(prev)
-        if (debouncedSearch) next.set('q', debouncedSearch)
-        else next.delete('q')
-        next.delete('page')
-        return next
-      },
-      { replace: true },
-    )
-  }, [debouncedSearch, query, setSearchParams])
 
   const { certificates, count, isLoading, isFetching, isError, refetch } = useCertificates({
     expert: expertId,
     status: tab === 'all' ? undefined : tab,
     search: query || undefined,
     page,
-    page_size: PAGE_SIZE,
+    page_size: LIST_PAGE_SIZE,
   })
-  const totalPages = Math.ceil(count / PAGE_SIZE)
+  const totalPages = Math.ceil(count / LIST_PAGE_SIZE)
 
   const changeTab = (nextTab: CertificateStatusTab) => {
-    setSearchParams(
-      (prev) => {
-        const next = new URLSearchParams(prev)
-        if (nextTab === 'all') next.delete('status')
-        else next.set('status', nextTab)
-        // Boshqa holatning natijalari birinchi sahifadan boshlanadi
-        next.delete('page')
-        return next
-      },
-      { replace: true },
-    )
-  }
-
-  const goToPage = (nextPage: number) => {
-    setSearchParams((prev) => {
-      const next = new URLSearchParams(prev)
-      next.set('page', String(nextPage))
-      return next
-    })
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    setParam('status', nextTab === 'all' ? null : nextTab)
   }
 
   const renderContent = () => {
-    if (isLoading) return <CertificatesSkeleton />
+    if (isLoading) return <TableSkeleton />
 
     if (isError && certificates.length === 0) {
       return (
@@ -154,20 +89,13 @@ export function ReviewCertificatesList({
       <CertificateStatusTabs value={tab} onChange={changeTab} counts={counts} />
 
       <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div
-          data-field-control
-          className="bg-surface border-line focus-within:ring-primary flex h-12 items-center gap-3 rounded-xl border px-4 focus-within:ring-2 sm:w-full sm:max-w-md"
-        >
-          <Search className="text-neutral size-4.5 shrink-0" strokeWidth={2} aria-hidden="true" />
-          <input
-            type="search"
-            aria-label={t('dashboard.reviewCertificates.searchLabel')}
-            placeholder={t('dashboard.reviewCertificates.searchPlaceholder')}
-            value={searchInput}
-            onChange={(event) => setSearchInput(event.target.value)}
-            className="text-heading placeholder:text-neutral/70 h-full min-w-0 flex-1 bg-transparent text-[15px] outline-none"
-          />
-        </div>
+        <SearchInput
+          className="sm:w-full sm:max-w-md"
+          label={t('dashboard.reviewCertificates.searchLabel')}
+          placeholder={t('dashboard.reviewCertificates.searchPlaceholder')}
+          value={searchInput}
+          onChange={setSearchInput}
+        />
         {!isLoading && count > 0 && (
           <p className="text-body text-[14px] tabular-nums">
             {t('dashboard.reviewCertificates.count', { count })}

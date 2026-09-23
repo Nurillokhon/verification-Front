@@ -86,6 +86,12 @@ export default defineConfig(({ command }) => {
             ) {
               return "react-vendor";
             }
+            // react-router ham deyarli har sahifada kerak va kamdan-kam
+            // yangilanadi. Nomi ham muhim: aks holda rolldown bu umumiy chunk'ga
+            // tasodifiy modul nomini (masalan "button") berib yuboradi.
+            if (id.includes("react-router")) {
+              return "router-vendor";
+            }
             // i18n kutubxonalari app kodiga qaraganda kamroq yangilanadi — alohida
             // chunk'da uzoq muddat keshlanadi.
             if (id.includes("i18next") || id.includes("react-i18next")) {

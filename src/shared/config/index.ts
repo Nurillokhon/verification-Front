@@ -23,4 +23,13 @@ export const DEFAULT_LANGUAGE: Language = 'uz'
 
 export const LANGUAGE_STORAGE_KEY = 'lang'
 
+// Ro'yxat sahifalarining standart sahifa hajmi (sertifikatlar, arizalar,
+// ekspertlar). Lug'atlar ro'yxati boshqacha — entities/dictionary'dagi
+// DICTIONARY_PAGE_SIZE.
+export const LIST_PAGE_SIZE = 10
+
+// Qidiruv maydonida yozish tugaganini kutish vaqti: bundan qisqasi har harfga
+// so'rov yuborardi, uzunroq esa sezilarli kechikish beradi.
+export const SEARCH_DEBOUNCE_MS = 400
+
 export { ROUTES } from './routes'

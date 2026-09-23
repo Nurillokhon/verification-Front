@@ -2,9 +2,7 @@ import { Eye } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router'
 import { CertificateStatusBadge, type CertificateListItem } from '@/entities/certificate'
-
-const HEAD_CELL_CLASS_NAME = 'px-5 py-3.5 font-bold'
-const CELL_CLASS_NAME = 'text-body px-5 py-4'
+import { TableHeadRow, TableRow, Td, Th } from '@/shared/ui'
 
 type ReviewCertificatesTableProps = {
   certificates: readonly CertificateListItem[]
@@ -29,42 +27,26 @@ export function ReviewCertificatesTable({
       <div className="hidden overflow-x-auto md:block">
         <table className="w-full min-w-[980px] text-left text-[14px]">
           <thead>
-            <tr className="border-line text-neutral border-b text-[12px] tracking-wide uppercase">
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t('dashboard.reviewCertificates.columns.number')}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t('dashboard.reviewCertificates.columns.candidate')}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t('dashboard.reviewCertificates.columns.type')}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t('dashboard.reviewCertificates.columns.language')}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t('dashboard.reviewCertificates.columns.degree')}
-              </th>
+            <TableHeadRow>
+              <Th>{t('dashboard.reviewCertificates.columns.number')}</Th>
+              <Th>{t('dashboard.reviewCertificates.columns.candidate')}</Th>
+              <Th>{t('dashboard.reviewCertificates.columns.type')}</Th>
+              <Th>{t('dashboard.reviewCertificates.columns.language')}</Th>
+              <Th>{t('dashboard.reviewCertificates.columns.degree')}</Th>
               {showExpert && (
-                <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                  {t('dashboard.reviewCertificates.columns.expert')}
-                </th>
+                <Th>{t('dashboard.reviewCertificates.columns.expert')}</Th>
               )}
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t('dashboard.reviewCertificates.columns.createdAt')}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t('dashboard.reviewCertificates.columns.status')}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
+              <Th>{t('dashboard.reviewCertificates.columns.createdAt')}</Th>
+              <Th>{t('dashboard.reviewCertificates.columns.status')}</Th>
+              <Th>
                 <span className="sr-only">{t('dashboard.reviewCertificates.columns.actions')}</span>
-              </th>
-            </tr>
+              </Th>
+            </TableHeadRow>
           </thead>
           <tbody className="divide-line divide-y">
             {certificates.map((certificate) => (
-              <tr key={certificate.id} className="hover:bg-surface-sky transition-colors">
-                <td className="px-5 py-4">
+              <TableRow key={certificate.id}>
+                <Td>
                   <Link
                     to={getDetailPath(certificate.id)}
                     state={linkState}
@@ -72,23 +54,21 @@ export function ReviewCertificatesTable({
                   >
                     {certificate.number}
                   </Link>
-                </td>
-                <td className={CELL_CLASS_NAME}>{certificate.full_name || '—'}</td>
-                <td className={CELL_CLASS_NAME}>{certificate.type_name || '—'}</td>
-                <td className={CELL_CLASS_NAME}>{certificate.language_name || '—'}</td>
-                <td className={CELL_CLASS_NAME}>{certificate.degree_name || '—'}</td>
+                </Td>
+                <Td>{certificate.full_name || '—'}</Td>
+                <Td>{certificate.type_name || '—'}</Td>
+                <Td>{certificate.language_name || '—'}</Td>
+                <Td>{certificate.degree_name || '—'}</Td>
                 {showExpert && (
-                  <td className={`${CELL_CLASS_NAME} whitespace-nowrap tabular-nums`}>
-                    {certificate.expert || '—'}
-                  </td>
+                  <Td className="whitespace-nowrap tabular-nums">{certificate.expert || '—'}</Td>
                 )}
-                <td className={`${CELL_CLASS_NAME} whitespace-nowrap tabular-nums`}>
+                <Td className="whitespace-nowrap tabular-nums">
                   {certificate.created_at_str || '—'}
-                </td>
-                <td className="px-5 py-4">
+                </Td>
+                <Td>
                   <CertificateStatusBadge status={certificate.status} />
-                </td>
-                <td className="px-5 py-4 text-right">
+                </Td>
+                <Td className="text-right">
                   <Link
                     to={getDetailPath(certificate.id)}
                     state={linkState}
@@ -98,8 +78,8 @@ export function ReviewCertificatesTable({
                     <Eye className="size-4 shrink-0" strokeWidth={2.2} aria-hidden="true" />
                     {t('dashboard.reviewCertificates.view')}
                   </Link>
-                </td>
-              </tr>
+                </Td>
+              </TableRow>
             ))}
           </tbody>
         </table>

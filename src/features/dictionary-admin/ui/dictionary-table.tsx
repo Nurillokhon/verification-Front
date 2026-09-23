@@ -1,6 +1,7 @@
 import { Eye, EyeOff, Pencil } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { cn } from '@/shared/lib/cn'
+import { TableHeadRow, TableRow, Td, Th } from '@/shared/ui'
 import {
   formatFieldValue,
   getRowTags,
@@ -10,8 +11,6 @@ import {
   type DictionaryRow,
 } from '../model/resources'
 
-const HEAD_CELL_CLASS_NAME = 'px-5 py-3.5 font-bold'
-const CELL_CLASS_NAME = 'text-body px-5 py-4'
 const ACTION_CLASS_NAME =
   'inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[13.5px] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50'
 
@@ -54,24 +53,18 @@ export function DictionaryTable({
     <div className="overflow-x-auto">
       <table className="w-full min-w-160 text-left text-[14px]">
         <thead>
-          <tr className="border-line text-neutral border-b text-[12px] tracking-wide uppercase">
-            <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-              {t('dashboard.forms.fields.name')}
-            </th>
+          <TableHeadRow>
+            <Th>{t('dashboard.forms.fields.name')}</Th>
             {columns.map((field) => (
-              <th key={field.key} scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t(field.labelKey)}
-              </th>
+              <Th key={field.key}>{t(field.labelKey)}</Th>
             ))}
             {config.canHide && (
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t('dashboard.forms.columns.state')}
-              </th>
+              <Th>{t('dashboard.forms.columns.state')}</Th>
             )}
-            <th scope="col" className={HEAD_CELL_CLASS_NAME}>
+            <Th>
               <span className="sr-only">{t('dashboard.forms.columns.actions')}</span>
-            </th>
-          </tr>
+            </Th>
+          </TableHeadRow>
         </thead>
         <tbody className="divide-line divide-y">
           {rows.map((row) => {
@@ -79,23 +72,23 @@ export function DictionaryTable({
             const name = String(row.name ?? '') || `#${row.id}`
 
             return (
-              <tr key={row.id} className="hover:bg-surface-sky transition-colors">
-                <td className="px-5 py-4">
+              <TableRow key={row.id}>
+                <Td>
                   <p className={cn('text-heading font-bold', hidden && 'text-neutral')}>{name}</p>
                   {'description' in row && row.description && (
                     <p className="text-neutral mt-1 text-[12.5px]">{row.description}</p>
                   )}
                   <TagList items={getRowTags(row)} />
-                </td>
+                </Td>
 
                 {columns.map((field) => (
-                  <td key={field.key} className={cn(CELL_CLASS_NAME, 'whitespace-nowrap')}>
+                  <Td key={field.key} className="whitespace-nowrap">
                     {formatFieldValue(row, field) ?? <span className="text-neutral">—</span>}
-                  </td>
+                  </Td>
                 ))}
 
                 {config.canHide && (
-                  <td className={CELL_CLASS_NAME}>
+                  <Td>
                     <span
                       className={cn(
                         'rounded-full px-2.5 py-1 text-[12px] font-semibold whitespace-nowrap',
@@ -104,10 +97,10 @@ export function DictionaryTable({
                     >
                       {t(hidden ? 'dashboard.forms.state.hidden' : 'dashboard.forms.state.active')}
                     </span>
-                  </td>
+                  </Td>
                 )}
 
-                <td className="px-5 py-4 text-right whitespace-nowrap">
+                <Td className="text-right whitespace-nowrap">
                   <button
                     type="button"
                     disabled={isPending}
@@ -137,8 +130,8 @@ export function DictionaryTable({
                       {t(hidden ? 'dashboard.forms.actions.restore' : 'dashboard.forms.actions.hide')}
                     </button>
                   )}
-                </td>
-              </tr>
+                </Td>
+              </TableRow>
             )
           })}
         </tbody>

@@ -1,12 +1,12 @@
-import { Search, UserPlus } from 'lucide-react'
+import { UserPlus } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useExpertStatistics, type ExpertStatistics } from '@/entities/expert'
 import { CreateExpertDrawer } from '@/features/create-expert'
 import { cn } from '@/shared/lib/cn'
-import { Button } from '@/shared/ui'
+import { Button, SearchInput, TableSkeleton } from '@/shared/ui'
 import { DashboardPageHeader } from './dashboard-page-header'
-import { ExpertsEmptyState, ExpertsSkeleton } from './experts/experts-states'
+import { ExpertsEmptyState } from './experts/experts-states'
 import { ExpertsTable } from './experts/experts-table'
 import { LoadErrorState } from './load-error-state'
 
@@ -27,7 +27,7 @@ export function DashboardExpertsPage() {
   const filteredExperts = query ? experts.filter((expert) => matchesQuery(expert, query)) : experts
 
   const renderContent = () => {
-    if (isLoading) return <ExpertsSkeleton />
+    if (isLoading) return <TableSkeleton withAvatar />
 
     if (isError && experts.length === 0) {
       return (
@@ -67,20 +67,13 @@ export function DashboardExpertsPage() {
       />
 
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div
-          data-field-control
-          className="bg-surface border-line focus-within:ring-primary flex h-12 items-center gap-3 rounded-xl border px-4 focus-within:ring-2 sm:w-full sm:max-w-md"
-        >
-          <Search className="text-neutral size-4.5 shrink-0" strokeWidth={2} aria-hidden="true" />
-          <input
-            type="search"
-            aria-label={t('dashboard.experts.searchLabel')}
-            placeholder={t('dashboard.experts.searchPlaceholder')}
-            value={searchInput}
-            onChange={(event) => setSearchInput(event.target.value)}
-            className="text-heading placeholder:text-neutral/70 h-full min-w-0 flex-1 bg-transparent text-[15px] outline-none"
-          />
-        </div>
+        <SearchInput
+          className="sm:w-full sm:max-w-md"
+          label={t('dashboard.experts.searchLabel')}
+          placeholder={t('dashboard.experts.searchPlaceholder')}
+          value={searchInput}
+          onChange={setSearchInput}
+        />
         {!isLoading && experts.length > 0 && (
           <p className="text-body text-[14px] tabular-nums">
             {t('dashboard.experts.count', { count: filteredExperts.length })}

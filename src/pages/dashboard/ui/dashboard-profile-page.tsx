@@ -4,10 +4,11 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUserProfile } from "@/entities/user";
 import { ChangePasswordForm } from "@/features/change-password";
+import { LoadErrorState } from "./load-error-state";
 import { PanelHeader } from "./profile/panel-header";
 import { PersonalDataPanel } from "./profile/personal-data-panel";
 import { ProfilePageHeader } from "./profile/profile-page-header";
-import { ProfileErrorState, ProfileSkeleton } from "./profile/profile-states";
+import { ProfileSkeleton } from "./profile/profile-states";
 import { ProfileSummaryCard } from "./profile/profile-summary-card";
 import {
   getTabId,
@@ -23,7 +24,19 @@ export function DashboardProfilePage() {
 
   const renderContent = () => {
     if (isLoading) return <ProfileSkeleton />;
-    if (!profile) return <ProfileErrorState onRetry={() => refetch()} />;
+    if (!profile) {
+      return (
+        <LoadErrorState
+          className="mt-8"
+          title={t("dashboard.profile.loadError.title")}
+          text={t("dashboard.profile.loadError.text")}
+          retry={{
+            label: t("dashboard.profile.loadError.retry"),
+            onRetry: () => refetch(),
+          }}
+        />
+      );
+    }
 
     return (
       <div className="mt-8 grid items-start gap-6 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] xl:gap-8">

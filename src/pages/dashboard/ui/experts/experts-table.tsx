@@ -7,16 +7,15 @@ import { getExpertName, type ExpertStatistics } from "@/entities/expert";
 import { getInitials } from "@/entities/user";
 import { ROUTES } from "@/shared/config";
 import { cn } from "@/shared/lib/cn";
+import { TableHeadRow, TableRow, Td, Th } from "@/shared/ui";
 
 function getDetailPath(id: number) {
   return generatePath(ROUTES.expertDetail, { id: String(id) });
 }
 
-const HEAD_CELL_CLASS_NAME = "px-5 py-3.5 font-bold";
-const NUMBER_HEAD_CELL_CLASS_NAME = `${HEAD_CELL_CLASS_NAME} text-right`;
-const CELL_CLASS_NAME = "text-body px-5 py-4";
-const NUMBER_CELL_CLASS_NAME =
-  "px-5 py-4 text-right font-semibold tabular-nums";
+// Raqamli ustunlar o'ngga tekislanadi
+const NUMBER_HEAD_CELL_CLASS_NAME = "text-right";
+const NUMBER_CELL_CLASS_NAME = "text-right font-semibold tabular-nums";
 
 function ExpertAvatar({ expert }: { expert: ExpertStatistics }) {
   const initials = expert.full_name ? getInitials(expert.full_name) : null;
@@ -101,42 +100,27 @@ export function ExpertsTable({
       <div className="hidden overflow-x-auto lg:block">
         <table className="w-full min-w-270 text-left text-[14px]">
           <thead>
-            <tr className="border-line text-neutral border-b text-[12px] tracking-wide uppercase">
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t("dashboard.experts.columns.expert")}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t("dashboard.experts.columns.documents")}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t("dashboard.experts.columns.languages")}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t("dashboard.experts.columns.types")}
-              </th>
+            <TableHeadRow>
+              <Th>{t("dashboard.experts.columns.expert")}</Th>
+              <Th>{t("dashboard.experts.columns.documents")}</Th>
+              <Th>{t("dashboard.experts.columns.languages")}</Th>
+              <Th>{t("dashboard.experts.columns.types")}</Th>
               {STAT_COLUMNS.map((column) => (
-                <th
-                  key={column.key}
-                  scope="col"
-                  className={NUMBER_HEAD_CELL_CLASS_NAME}
-                >
+                <Th key={column.key} className={NUMBER_HEAD_CELL_CLASS_NAME}>
                   {t(column.labelKey)}
-                </th>
+                </Th>
               ))}
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
+              <Th>
                 <span className="sr-only">
                   {t("dashboard.experts.columns.actions")}
                 </span>
-              </th>
-            </tr>
+              </Th>
+            </TableHeadRow>
           </thead>
           <tbody className="divide-line divide-y">
             {experts.map((expert) => (
-              <tr
-                key={expert.id}
-                className="hover:bg-surface-sky transition-colors"
-              >
-                <td className="px-5 py-4">
+              <TableRow key={expert.id}>
+                <Td>
                   <Link
                     to={getDetailPath(expert.id)}
                     className="group flex items-center gap-3"
@@ -153,30 +137,25 @@ export function ExpertsTable({
                       )}
                     </div>
                   </Link>
-                </td>
-                <td
-                  className={`${CELL_CLASS_NAME} whitespace-nowrap tabular-nums`}
-                >
+                </Td>
+                <Td className="whitespace-nowrap tabular-nums">
                   <p>{expert.passport || "—"}</p>
                   <p className="text-neutral text-[12.5px]">
                     {expert.pnfl || "—"}
                   </p>
-                </td>
-                <td className="px-5 py-4">
+                </Td>
+                <Td>
                   <TagList items={expert.language} />
-                </td>
-                <td className="px-5 py-4">
+                </Td>
+                <Td>
                   <TagList items={expert.type} />
-                </td>
+                </Td>
                 {STAT_COLUMNS.map((column) => (
-                  <td
-                    key={column.key}
-                    className={cn(NUMBER_CELL_CLASS_NAME, column.className)}
-                  >
+                  <Td key={column.key} className={cn(NUMBER_CELL_CLASS_NAME, column.className)}>
                     {expert[column.key]}
-                  </td>
+                  </Td>
                 ))}
-                <td className="px-5 py-4 text-right">
+                <Td className="text-right">
                   <Link
                     to={getDetailPath(expert.id)}
                     aria-label={`${t("dashboard.experts.view")}: ${getExpertName(expert)}`}
@@ -189,8 +168,8 @@ export function ExpertsTable({
                     />
                     {t("dashboard.experts.view")}
                   </Link>
-                </td>
-              </tr>
+                </Td>
+              </TableRow>
             ))}
           </tbody>
         </table>

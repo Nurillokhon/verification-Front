@@ -1,4 +1,5 @@
 import { CloudAlert, RefreshCw } from 'lucide-react'
+import { cn } from '@/shared/lib/cn'
 import { Button } from '@/shared/ui'
 
 type LoadErrorStateProps = {
@@ -6,13 +7,17 @@ type LoadErrorStateProps = {
   text: string
   /** Berilmasa (masalan, "topilmadi" holatida) qayta urinish tugmasi chiqmaydi */
   retry?: { label: string; onRetry: () => void }
+  className?: string
 }
 
-export function LoadErrorState({ title, text, retry }: LoadErrorStateProps) {
+export function LoadErrorState({ title, text, retry, className }: LoadErrorStateProps) {
   return (
     <div
       role="alert"
-      className="bg-surface shadow-card border-line flex flex-col items-center rounded-3xl border px-6 py-14 text-center"
+      className={cn(
+        'bg-surface shadow-card border-line flex flex-col items-center rounded-3xl border px-6 py-14 text-center',
+        className,
+      )}
     >
       <span className="bg-danger/10 text-danger flex size-14 items-center justify-center rounded-2xl">
         <CloudAlert className="size-7" strokeWidth={2} aria-hidden="true" />

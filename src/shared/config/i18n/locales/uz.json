@@ -196,6 +196,22 @@
     "copyright": "© {{year}} Digital Archivist Platform. Barcha huquqlar himoyalangan."
   },
   "common": {
+    "loading": "Yuklanmoqda…",
+    "notFound": {
+      "title": "Sahifa topilmadi",
+      "text": "Siz izlagan sahifa mavjud emas yoki manzil o'zgargan bo'lishi mumkin.",
+      "home": "Bosh sahifaga"
+    },
+    "routeError": {
+      "title": "Kutilmagan xatolik",
+      "text": "Sahifani ko'rsatib bo'lmadi. Qayta urinib ko'ring yoki bosh sahifaga qayting.",
+      "retry": "Qayta yuklash",
+      "home": "Bosh sahifaga",
+      "outdated": {
+        "title": "Ilovaning yangi versiyasi chiqdi",
+        "text": "Sahifa qismi yuklanmadi, chunki brauzerda eski versiya ochiq. Yangilash bilan tuzatiladi."
+      }
+    },
     "pagination": {
       "label": "Sahifalar",
       "previous": "Oldingi",

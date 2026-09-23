@@ -2,10 +2,13 @@ import type { ReactNode } from 'react'
 import { Navigate } from 'react-router'
 import { getRoleHomeRoute, useCurrentUser, type UserRole } from '@/entities/user'
 import { ROUTES } from '@/shared/config'
+import { RouteFallback } from './route-fallback'
 
 type RequireAuthProps = {
   /** Sahifaga kira oladigan rollar. Berilmasa — faqat kirganlik tekshiriladi. */
   roles?: readonly UserRole[]
+  /** Profil so'rovi ketayotganda ko'rsatiladigan holat. */
+  fallback?: ReactNode
   children: ReactNode
 }
 
@@ -16,12 +19,14 @@ type RequireAuthProps = {
  * rolga qarab dashboard'ni shu yo'l bilan sinab ko'radi (soxta token yozilsa,
  * birinchi so'rovning 401'i axios interceptor orqali /login'ga uloqtirardi).
  */
-export function RequireAuth({ roles, children }: RequireAuthProps) {
+export function RequireAuth({ roles, fallback, children }: RequireAuthProps) {
   const { role, isLoading } = useCurrentUser()
 
   if (!role) {
-    // Token bor, lekin saqlangan foydalanuvchi yo'q — rol profil so'rovidan kutiladi
-    if (isLoading) return null
+    // Token bor, lekin saqlangan foydalanuvchi yo'q — rol profil so'rovidan
+    // kutiladi. Bo'sh ekran emas, lazy sahifalardagi bilan bir xil yuklanish
+    // holati ko'rsatiladi.
+    if (isLoading) return fallback ?? <RouteFallback />
     return <Navigate to={ROUTES.login} replace />
   }
 

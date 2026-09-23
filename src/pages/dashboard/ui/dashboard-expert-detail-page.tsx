@@ -4,7 +4,7 @@ import { getExpertName, parseExpertId, useExpert } from '@/entities/expert'
 import { getHttpStatus } from '@/shared/api'
 import { ROUTES } from '@/shared/config'
 import { formatUzPhone } from '@/shared/lib/phone'
-import { CertificatesSkeleton } from './certificates/certificates-states'
+import { TableSkeleton } from '@/shared/ui'
 import { DashboardPageHeader } from './dashboard-page-header'
 import { ExpertCertificatesPanel } from './expert-detail/expert-certificates-panel'
 import { ExpertProfileCard } from './expert-detail/expert-profile-card'
@@ -44,7 +44,7 @@ export function DashboardExpertDetailPage() {
   }
 
   const renderState = () => {
-    if (expertId !== null && isLoading) return <CertificatesSkeleton />
+    if (expertId !== null && isLoading) return <TableSkeleton />
 
     if (isError && getHttpStatus(error) !== 404) {
       return (

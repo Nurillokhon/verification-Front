@@ -1,13 +1,20 @@
-import { Eye, FileText, Search, SearchX } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { Eye } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { Link, useLocation, useSearchParams } from 'react-router'
+import { Link, useLocation } from 'react-router'
 import { CertificateStatusBadge, normalizeStatus } from '@/entities/certificate'
 import { useExpertCertificates, type ExpertCertificate } from '@/entities/expert'
+import { LIST_PAGE_SIZE } from '@/shared/config'
 import { cn } from '@/shared/lib/cn'
-import { useDebouncedValue } from '@/shared/lib/debounce'
-import { Pagination } from '@/shared/ui'
-import { CertificatesSkeleton } from '../certificates/certificates-states'
+import { useUrlSearchState } from '@/shared/lib/url-state'
+import {
+  Pagination,
+  SearchInput,
+  TableHeadRow,
+  TableRow,
+  TableSkeleton,
+  Td,
+  Th,
+} from '@/shared/ui'
 import { LoadErrorState } from '../load-error-state'
 import {
   CERTIFICATE_STATUS_TABS,
@@ -15,37 +22,10 @@ import {
   type CertificateStatusTab,
 } from '../review-certificates/certificate-status-tab'
 import { CertificateStatusTabs } from '../review-certificates/certificate-status-tabs'
-
-const PAGE_SIZE = 10
-const SEARCH_DEBOUNCE_MS = 400
-const HEAD_CELL_CLASS_NAME = 'px-5 py-3.5 font-bold'
-const CELL_CLASS_NAME = 'text-body px-5 py-4'
+import { ReviewCertificatesEmptyState } from '../review-certificates/review-certificates-states'
 
 function matchesTab(certificate: ExpertCertificate, tab: CertificateStatusTab) {
   return tab === 'all' || normalizeStatus(certificate.status) === tab.toUpperCase()
-}
-
-function EmptyState({ hasQuery }: { hasQuery: boolean }) {
-  const { t } = useTranslation()
-  const Icon = hasQuery ? SearchX : FileText
-
-  return (
-    <div className="bg-surface shadow-card border-line flex flex-col items-center rounded-3xl border px-6 py-14 text-center">
-      <span className="bg-primary-soft text-primary flex size-14 items-center justify-center rounded-2xl">
-        <Icon className="size-7" strokeWidth={2} aria-hidden="true" />
-      </span>
-      <h2 className="text-heading mt-5 text-[18px] font-bold">
-        {hasQuery
-          ? t('dashboard.certificates.noResults.title')
-          : t('dashboard.reviewCertificates.empty.title')}
-      </h2>
-      <p className="text-body mt-2 max-w-sm text-[14px]">
-        {hasQuery
-          ? t('dashboard.certificates.noResults.text')
-          : t('dashboard.reviewCertificates.empty.text')}
-      </p>
-    </div>
-  )
 }
 
 type ExpertCertificatesTableProps = {
@@ -64,46 +44,32 @@ function ExpertCertificatesTable({ certificates, getDetailPath }: ExpertCertific
       <div className="hidden overflow-x-auto md:block">
         <table className="w-full min-w-[760px] text-left text-[14px]">
           <thead>
-            <tr className="border-line text-neutral border-b text-[12px] tracking-wide uppercase">
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t('dashboard.reviewCertificates.columns.number')}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t('dashboard.reviewCertificates.columns.candidate')}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t('dashboard.reviewCertificates.columns.type')}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t('dashboard.reviewCertificates.columns.language')}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t('dashboard.experts.detail.reviewedAt')}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
-                {t('dashboard.reviewCertificates.columns.status')}
-              </th>
-              <th scope="col" className={HEAD_CELL_CLASS_NAME}>
+            <TableHeadRow>
+              <Th>{t('dashboard.reviewCertificates.columns.number')}</Th>
+              <Th>{t('dashboard.reviewCertificates.columns.candidate')}</Th>
+              <Th>{t('dashboard.reviewCertificates.columns.type')}</Th>
+              <Th>{t('dashboard.reviewCertificates.columns.language')}</Th>
+              <Th>{t('dashboard.experts.detail.reviewedAt')}</Th>
+              <Th>{t('dashboard.reviewCertificates.columns.status')}</Th>
+              <Th>
                 <span className="sr-only">{t('dashboard.reviewCertificates.columns.actions')}</span>
-              </th>
-            </tr>
+              </Th>
+            </TableHeadRow>
           </thead>
           <tbody className="divide-line divide-y">
             {certificates.map((item) => (
-              <tr key={item.id} className="hover:bg-surface-sky transition-colors">
-                <td className="text-heading px-5 py-4 font-bold tabular-nums">
+              <TableRow key={item.id}>
+                <Td className="text-heading font-bold tabular-nums">
                   {item.certificate_number || '—'}
-                </td>
-                <td className={CELL_CLASS_NAME}>{item.candidate_full_name || '—'}</td>
-                <td className={CELL_CLASS_NAME}>{item.certificate_type || '—'}</td>
-                <td className={CELL_CLASS_NAME}>{item.certificate_laanguage || '—'}</td>
-                <td className={`${CELL_CLASS_NAME} whitespace-nowrap tabular-nums`}>
-                  {item.created_at_str || '—'}
-                </td>
-                <td className="px-5 py-4">
+                </Td>
+                <Td>{item.candidate_full_name || '—'}</Td>
+                <Td>{item.certificate_type || '—'}</Td>
+                <Td>{item.certificate_laanguage || '—'}</Td>
+                <Td className="whitespace-nowrap tabular-nums">{item.created_at_str || '—'}</Td>
+                <Td>
                   <CertificateStatusBadge status={item.status} />
-                </td>
-                <td className="px-5 py-4 text-right">
+                </Td>
+                <Td className="text-right">
                   {item.certificate !== null && (
                     <Link
                       to={getDetailPath(item.certificate)}
@@ -115,8 +81,8 @@ function ExpertCertificatesTable({ certificates, getDetailPath }: ExpertCertific
                       {t('dashboard.reviewCertificates.view')}
                     </Link>
                   )}
-                </td>
-              </tr>
+                </Td>
+              </TableRow>
             ))}
           </tbody>
         </table>
@@ -176,27 +142,9 @@ type ExpertCertificatesPanelProps = {
 export function ExpertCertificatesPanel({ expertId, getDetailPath }: ExpertCertificatesPanelProps) {
   const { t } = useTranslation()
   // Tab, sahifa va qidiruv URL'da saqlanadi — detal sahifasidan qaytilganda joy yo'qolmaydi
-  const [searchParams, setSearchParams] = useSearchParams()
-  const page = Math.max(1, Number(searchParams.get('page')) || 1)
-  const query = searchParams.get('q') ?? ''
+  const { page, query, searchInput, setSearchInput, setParam, goToPage, searchParams } =
+    useUrlSearchState()
   const tab = parseCertificateStatusTab(searchParams.get('status'))
-  const [searchInput, setSearchInput] = useState(query)
-  const debouncedSearch = useDebouncedValue(searchInput.trim(), SEARCH_DEBOUNCE_MS)
-
-  useEffect(() => {
-    if (debouncedSearch === query) return
-
-    setSearchParams(
-      (prev) => {
-        const next = new URLSearchParams(prev)
-        if (debouncedSearch) next.set('q', debouncedSearch)
-        else next.delete('q')
-        next.delete('page')
-        return next
-      },
-      { replace: true },
-    )
-  }, [debouncedSearch, query, setSearchParams])
 
   const { certificates, isLoading, isFetching, isError, refetch } = useExpertCertificates({
     expert: expertId,
@@ -211,35 +159,20 @@ export function ExpertCertificatesPanel({ expertId, getDetailPath }: ExpertCerti
   ) as Record<CertificateStatusTab, number>
 
   const filtered = certificates.filter((item) => matchesTab(item, tab))
-  const totalPages = Math.ceil(filtered.length / PAGE_SIZE)
+  const totalPages = Math.ceil(filtered.length / LIST_PAGE_SIZE)
   // Filtr o'zgarib natija kamaysa, mavjud bo'lmagan sahifada qolib ketmaslik uchun
   const currentPage = Math.min(page, Math.max(totalPages, 1))
-  const pageItems = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
+  const pageItems = filtered.slice(
+    (currentPage - 1) * LIST_PAGE_SIZE,
+    currentPage * LIST_PAGE_SIZE,
+  )
 
   const changeTab = (nextTab: CertificateStatusTab) => {
-    setSearchParams(
-      (prev) => {
-        const next = new URLSearchParams(prev)
-        if (nextTab === 'all') next.delete('status')
-        else next.set('status', nextTab)
-        next.delete('page')
-        return next
-      },
-      { replace: true },
-    )
-  }
-
-  const goToPage = (nextPage: number) => {
-    setSearchParams((prev) => {
-      const next = new URLSearchParams(prev)
-      next.set('page', String(nextPage))
-      return next
-    })
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    setParam('status', nextTab === 'all' ? null : nextTab)
   }
 
   const renderContent = () => {
-    if (isLoading) return <CertificatesSkeleton />
+    if (isLoading) return <TableSkeleton />
 
     if (isError && certificates.length === 0) {
       return (
@@ -254,7 +187,7 @@ export function ExpertCertificatesPanel({ expertId, getDetailPath }: ExpertCerti
       )
     }
 
-    if (filtered.length === 0) return <EmptyState hasQuery={Boolean(query)} />
+    if (filtered.length === 0) return <ReviewCertificatesEmptyState hasQuery={Boolean(query)} />
 
     return (
       <div className="bg-surface shadow-card border-line overflow-hidden rounded-3xl border">
@@ -275,20 +208,13 @@ export function ExpertCertificatesPanel({ expertId, getDetailPath }: ExpertCerti
       <CertificateStatusTabs value={tab} onChange={changeTab} counts={counts} />
 
       <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div
-          data-field-control
-          className="bg-surface border-line focus-within:ring-primary flex h-12 items-center gap-3 rounded-xl border px-4 focus-within:ring-2 sm:w-full sm:max-w-md"
-        >
-          <Search className="text-neutral size-4.5 shrink-0" strokeWidth={2} aria-hidden="true" />
-          <input
-            type="search"
-            aria-label={t('dashboard.reviewCertificates.searchLabel')}
-            placeholder={t('dashboard.experts.detail.searchPlaceholder')}
-            value={searchInput}
-            onChange={(event) => setSearchInput(event.target.value)}
-            className="text-heading placeholder:text-neutral/70 h-full min-w-0 flex-1 bg-transparent text-[15px] outline-none"
-          />
-        </div>
+        <SearchInput
+          className="sm:w-full sm:max-w-md"
+          label={t('dashboard.reviewCertificates.searchLabel')}
+          placeholder={t('dashboard.experts.detail.searchPlaceholder')}
+          value={searchInput}
+          onChange={setSearchInput}
+        />
         {!isLoading && filtered.length > 0 && (
           <p className="text-body text-[14px] tabular-nums">
             {t('dashboard.reviewCertificates.count', { count: filtered.length })}
