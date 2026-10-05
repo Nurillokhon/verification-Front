@@ -1,6 +1,6 @@
 import { FileCheck2, PenLine, Zap } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { Container } from '@/shared/ui'
+import { BlockPattern, Container } from '@/shared/ui'
 import { ArchiveVisual } from './archive-visual'
 
 // Faqat kalitlar/ikonka modul darajasida saqlanadi — matn t() bilan render
@@ -26,11 +26,32 @@ const CAPABILITIES = [
   },
 ] as const
 
+// Ikki vizual ortidan "chiqib turgan" bloklar — xaritaning ko'p qismi kartalar
+// ostida qoladi, faqat chetdagi qator/ustun ko'rinadi. Belgilar izohi:
+// BlockPattern'ning `rows` prop'ida.
+const PATTERN_BEHIND_TOP_LEFT = [
+  '..3..2.',
+  '.3..2..',
+  'b..2...',
+  '..1....',
+  '.1.....',
+  '1......',
+] as const
+
+const PATTERN_BEHIND_BOTTOM_RIGHT = [
+  '......1',
+  '.......',
+  '......2',
+  '.....2.',
+  '....2.3',
+  '.o.3.3.',
+] as const
+
 export function VerificationSystem() {
   const { t } = useTranslation()
 
   return (
-    <section className="bg-surface-muted">
+    <section className="bg-surface-muted overflow-hidden">
       <Container className="grid gap-14 py-20 lg:grid-cols-2 lg:gap-16 lg:py-28">
         <div>
           <h2 className="text-heading max-w-[18ch] text-[30px] leading-[1.15] font-extrabold tracking-[-0.02em] sm:text-[34px]">
@@ -55,7 +76,18 @@ export function VerificationSystem() {
           </ul>
         </div>
 
-        <div className="grid grid-cols-2 gap-5 self-center">
+        {/* isolate + -z-10: naqsh shu o'ram ichida kartalar ORTIDA qoladi, lekin
+            bo'lim fonidan pastga tushib ketmaydi. Chiqib turish masofasi (-6 = 24px)
+            naqshning bitta katagiga teng — chetda yarim kesilgan blok qolmaydi. */}
+        <div className="relative isolate grid grid-cols-2 gap-5 self-center">
+          <BlockPattern
+            rows={PATTERN_BEHIND_TOP_LEFT}
+            className="absolute -top-6 -left-6 -z-10 w-42"
+          />
+          <BlockPattern
+            rows={PATTERN_BEHIND_BOTTOM_RIGHT}
+            className="absolute -right-6 -bottom-6 -z-10 w-42"
+          />
           <div className="shadow-panel h-65 overflow-hidden rounded-2xl sm:h-75 lg:mt-14">
             <ArchiveVisual variant="grid" />
           </div>

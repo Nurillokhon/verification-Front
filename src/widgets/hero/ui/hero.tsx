@@ -2,7 +2,7 @@ import { BadgeCheck, History } from 'lucide-react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 import { ROUTES } from '@/shared/config'
-import { buttonVariants, Container } from '@/shared/ui'
+import { BlockPattern, buttonVariants, Container } from '@/shared/ui'
 import { CertificatePreview } from './certificate-preview'
 import { TrustBadge } from './trust-badge'
 
@@ -13,14 +13,47 @@ const STATS = [
   { id: 'time', icon: History, labelKey: 'hero.stats.time.label', valueKey: 'hero.stats.time.value' },
 ] as const
 
+// Fon naqshlari — logotipdagi "pastga bir qadam, keyin yuqoriga zina" shaklining
+// kattalashtirilgan davomi. Diagonallar o'ngga ko'tariladi (logotip bilan bir
+// yo'nalish) va burchakdan uzoqlashgan sari ochlashib, "erib" ketadi.
+// Belgilar izohi: BlockPattern'ning `rows` prop'ida.
+const PATTERN_TOP_RIGHT = [
+  '....o....2...3',
+  '......1.2...3.',
+  '.......b...3..',
+  '..........3..2',
+  '.......1.2..2.',
+  '........2..2..',
+  '........1.1..1',
+  '...o.....1..1.',
+  '...........o..',
+] as const
+
+const PATTERN_BOTTOM_LEFT = [
+  '....1...',
+  '...1....',
+  '2.2...1.',
+  '.3...1.o',
+  '....1...',
+] as const
+
 export function Hero() {
   const { t, i18n } = useTranslation()
 
   return (
     // Xom hex gradient o'rniga CSS o'zgaruvchilari: shu 3 pog'ona surface
     // token'i orqali beriladi, shunda dark rejimda gradient ham to'g'ri o'zgaradi.
-    <section className="bg-[radial-gradient(120%_110%_at_88%_15%,var(--color-surface-muted)_0%,var(--color-surface-sky)_46%,var(--color-surface)_100%)]">
-      <Container className="grid items-center gap-14 py-16 lg:grid-cols-2 lg:gap-16 lg:py-24">
+    <section className="relative overflow-hidden bg-[radial-gradient(120%_110%_at_88%_15%,var(--color-surface-muted)_0%,var(--color-surface-sky)_46%,var(--color-surface)_100%)]">
+      {/* Naqshlar Container'dan OLDIN turadi va Container `relative` — shunda
+          matn va panel doim naqsh ustida chiziladi. Tor ekranda naqsh ikki
+          baravar kichrayadi, pastki-chap bo'lagi esa sarlavha ostiga tushib
+          qolmasligi uchun faqat lg'dan boshlab ko'rinadi. */}
+      <BlockPattern rows={PATTERN_TOP_RIGHT} className="absolute top-0 right-0 w-49 lg:w-98" />
+      <BlockPattern
+        rows={PATTERN_BOTTOM_LEFT}
+        className="absolute bottom-0 left-0 w-56 max-lg:hidden"
+      />
+      <Container className="relative grid items-center gap-14 py-16 lg:grid-cols-2 lg:gap-16 lg:py-24">
         <div>
           <h1 className="text-heading max-w-[15ch] text-[40px] leading-[1.08] font-extrabold tracking-[-0.03em] sm:text-[52px]">
             {/* uz/ru so'z tartibi farq qilgani uchun <Trans> ishlatiladi (prefix/suffix bo'lishdan afzal) */}

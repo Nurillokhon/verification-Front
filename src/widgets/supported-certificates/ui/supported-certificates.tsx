@@ -1,6 +1,6 @@
 import { ArrowUpRight, BookOpen, Briefcase, Globe, GraduationCap } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { Container } from '@/shared/ui'
+import { BlockPattern, Container } from '@/shared/ui'
 
 // Faqat kalitlar/ikonka modul darajasida saqlanadi — matn t() bilan render
 // paytida olinadi, shunda til o'zgarganda ro'yxat ham yangilanadi.
@@ -37,6 +37,18 @@ const STATS = [
   },
 ] as const
 
+// IELTS kartasidagi naqsh logotip shaklini takrorlaydi: bir qadam pastga (ko'k
+// blok — burilish nuqtasi), keyin o'ngga-yuqoriga zina. Zinaning oxirgi "bloki"
+// — kartaning o'ng yuqori burchagidagi strelka ikonkasi (u 24px to'rning aynan
+// bitta katagiga to'g'ri keladi). Belgilar izohi: BlockPattern'ning `rows` prop'ida.
+const PATTERN_IELTS = [
+  '.........',
+  '.........',
+  '......3..',
+  '...2.2...',
+  '....b....',
+] as const
+
 export function SupportedCertificates() {
   const { t } = useTranslation()
 
@@ -53,7 +65,9 @@ export function SupportedCertificates() {
         </div>
 
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          <article className="bg-surface-accent/70 flex flex-col justify-between gap-12 rounded-2xl sm:gap-16 p-7 sm:col-span-2">
+          <article className="bg-surface-accent/70 relative isolate flex flex-col justify-between gap-12 overflow-hidden rounded-2xl p-7 sm:col-span-2 sm:gap-16">
+            {/* w-54 = 9 katak × 24px: to'r kartaning p-7 chegarasidagi strelka bilan mos tushadi */}
+            <BlockPattern rows={PATTERN_IELTS} className="absolute top-0 right-0 -z-10 w-54" />
             <div className="flex items-start justify-between">
               <span className="bg-primary/15 flex size-11 items-center justify-center rounded-xl">
                 <Globe className="text-primary size-5" strokeWidth={2.1} aria-hidden="true" />

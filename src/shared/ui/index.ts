@@ -1,3 +1,4 @@
+export { BlockPattern } from './block-pattern'
 export { BrandMark } from './brand-mark'
 export { BrandWordmark } from './brand-wordmark'
 export { Button, buttonVariants, type ButtonSize, type ButtonVariant } from './button'
