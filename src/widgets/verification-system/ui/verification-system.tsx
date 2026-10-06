@@ -1,7 +1,8 @@
 import { FileCheck2, PenLine, Zap } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import reviewImage from '@/shared/assets/verification-review.png'
+import signingImage from '@/shared/assets/verification-signing.png'
 import { BlockPattern, Container } from '@/shared/ui'
-import { ArchiveVisual } from './archive-visual'
 
 // Faqat kalitlar/ikonka modul darajasida saqlanadi — matn t() bilan render
 // paytida olinadi, shunda til o'zgarganda ro'yxat ham yangilanadi.
@@ -89,10 +90,27 @@ export function VerificationSystem() {
             className="absolute -right-6 -bottom-6 -z-10 w-42"
           />
           <div className="shadow-panel h-65 overflow-hidden rounded-2xl sm:h-75 lg:mt-14">
-            <ArchiveVisual variant="grid" />
+            {/* object-left: tor kartada kesilganda ham odam va ekran kadrda qoladi */}
+            <img
+              src={reviewImage}
+              alt={t('verificationSystem.visuals.reviewAlt')}
+              width={512}
+              height={512}
+              loading="lazy"
+              decoding="async"
+              className="block h-full w-full object-cover object-left"
+            />
           </div>
           <div className="shadow-panel h-75 overflow-hidden rounded-2xl sm:h-85">
-            <ArchiveVisual variant="scan" />
+            <img
+              src={signingImage}
+              alt={t('verificationSystem.visuals.signingAlt')}
+              width={512}
+              height={512}
+              loading="lazy"
+              decoding="async"
+              className="block h-full w-full object-cover"
+            />
           </div>
         </div>
       </Container>

@@ -5,7 +5,8 @@
    --------------------------------------------------------------- */
 @theme {
   /* Tipografiya */
-  --font-sans: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Manrope Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Asosiy rollar */
   --color-primary: #00796a; /* seed — asosiy tugma, sarlavha aksenti, status ikonkasi */

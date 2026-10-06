@@ -2,7 +2,7 @@ import { Globe, Share2, ShieldCheck } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 import { ROUTES } from '@/shared/config'
-import { BrandMark, Container } from '@/shared/ui'
+import { BrandMark, BrandWordmark, Container } from '@/shared/ui'
 
 // Faqat kalitlar modul darajasida saqlanadi — matn t() bilan render paytida
 // olinadi, shunda til o'zgarganda ro'yxat ham yangilanadi.
@@ -52,8 +52,8 @@ export function SiteFooter() {
           <div>
             <div className="flex items-center gap-2.5">
               <BrandMark className="w-8" />
-              {/* Brend nomi — tarjima qilinmaydi */}
-              <p className="text-heading text-[15px] font-extrabold">Digital Archivist</p>
+              {/* Brend logotipi — tarjima qilinmaydi */}
+              <BrandWordmark size="md" />
             </div>
             <p className="text-body mt-3 max-w-[38ch] text-[12.5px] leading-[1.7]">
               {t('footer.description')}

@@ -41,9 +41,9 @@
         "text": "Tekshiruv natijalari yuridik kuchga ega va tasdiqlangan bo'ladi."
       }
     },
-    "archiveVisual": {
-      "gridAriaLabel": "Raqamli arxivdagi hujjatlar ro'yxati",
-      "scanAriaLabel": "Hujjat haqiqiyligini skanerlash"
+    "visuals": {
+      "reviewAlt": "Mutaxassis hujjatni raqamli ekranda tekshirmoqda",
+      "signingAlt": "Planshetda hujjatni elektron imzolash"
     }
   },
   "supportedCertificates": {

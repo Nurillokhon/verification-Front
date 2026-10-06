@@ -36,7 +36,8 @@ export function AntdProvider({ children }: { children: ReactNode }) {
           colorError: palette.danger,
           colorBgElevated: palette.surface,
           colorText: palette.text,
-          fontFamily: "'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif",
+          fontFamily: "'Manrope Variable', ui-sans-serif, system-ui, sans-serif",
+          fontFamilyCode: "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace",
           borderRadius: 12,
         },
       }}

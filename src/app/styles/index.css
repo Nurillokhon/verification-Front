@@ -1,5 +1,6 @@
 @import 'tailwindcss';
-@import '@fontsource-variable/plus-jakarta-sans';
+@import '@fontsource-variable/manrope';
+@import '@fontsource/jetbrains-mono';
 @import './theme.css';
 
 /* Tailwind v4'da dark: prefiksi shu variant orqali ro'yxatdan o'tkaziladi.
