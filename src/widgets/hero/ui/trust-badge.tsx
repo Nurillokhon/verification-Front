@@ -25,13 +25,13 @@ export function TrustBadge() {
             // ochroq bo'lib qolgani uchun bu token avtomatik mos matn
             // rangiga (deyarli qora) o'zgaradi, boshqa ikki tonda (secondary,
             // neutral) esa oq bilan bir xil yoki undan yaxshiroq kontrast beradi.
-            className={`${tone} ring-surface text-on-primary flex size-8 items-center justify-center rounded-full text-[11px] font-bold ring-2`}
+            className={`${tone} ring-surface text-on-primary flex size-8 items-center justify-center rounded-full text-micro font-semibold ring-2`}
           >
             {initials}
           </span>
         ))}
       </div>
-      <p className="text-body text-sm">{t('hero.trustBadge', { count: TRUST_USER_COUNT })}</p>
+      <p className="text-body text-copy">{t('hero.trustBadge', { count: TRUST_USER_COUNT })}</p>
     </div>
   )
 }

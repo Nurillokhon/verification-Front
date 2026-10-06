@@ -8,6 +8,59 @@
   --font-sans: 'Manrope Variable', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
+  /* Matn shkalasi — saytdagi BARCHA matn shu 10 pog'onadan birini oladi.
+     Har token text-* utilitasini beradi va o'lcham bilan birga qator
+     balandligi, qalinlik va harf oralig'ini ham o'rnatadi: `text-title`
+     yozilsa bas, yoniga qalinlik yoki qator balandligi utilitasi shart emas.
+     Nomlar rang tokenlari (heading, body, neutral...) bilan ataylab
+     to'qnashmaydi — text-body rang, text-copy esa o'lcham.
+     Qalinlik qoidasi: matn 400, yorliq/tugma 500, karta sarlavhasi 600,
+     sahifa/bo'lim sarlavhasi 700, 800 — faqat hero va logotip. */
+  --text-display: 2.75rem; /* hero sarlavha — sm'dan 3.25rem, xl'dan 3.75rem (pastda) */
+  --text-display--line-height: 1.06;
+  --text-display--font-weight: 800;
+  --text-display--letter-spacing: -0.03em;
+
+  --text-section: 1.875rem; /* bosh sahifa bo'lim sarlavhasi — sm'dan 2.25rem */
+  --text-section--line-height: 1.15;
+  --text-section--font-weight: 700;
+  --text-section--letter-spacing: -0.02em;
+
+  --text-page: 1.5rem; /* sahifa sarlavhasi (dashboard, auth) — sm'dan 1.75rem */
+  --text-page--line-height: 1.2;
+  --text-page--font-weight: 700;
+  --text-page--letter-spacing: -0.015em;
+
+  --text-title: 1.125rem; /* karta/blok sarlavhasi */
+  --text-title--line-height: 1.35;
+  --text-title--font-weight: 600;
+  --text-title--letter-spacing: -0.01em;
+
+  --text-subtitle: 1rem; /* kichik sarlavha, muhim qiymat */
+  --text-subtitle--line-height: 1.4;
+  --text-subtitle--font-weight: 600;
+
+  --text-lead: 1rem; /* asosiy matn — bosh sahifa va auth */
+  --text-lead--line-height: 1.65;
+  --text-lead--font-weight: 400;
+
+  --text-copy: 0.875rem; /* asosiy matn — dashboard, jadval */
+  --text-copy--line-height: 1.55;
+  --text-copy--font-weight: 400;
+
+  --text-caption: 0.8125rem; /* yordamchi matn, izoh, xato */
+  --text-caption--line-height: 1.5;
+  --text-caption--font-weight: 400;
+
+  --text-micro: 0.75rem; /* eng mayda: teg, belgi — bundan kichigi yo'q */
+  --text-micro--line-height: 1.35;
+  --text-micro--font-weight: 500;
+
+  --text-overline: 0.75rem; /* KATTA HARFLI yorliq — doim `uppercase` bilan birga */
+  --text-overline--line-height: 1.35;
+  --text-overline--font-weight: 600;
+  --text-overline--letter-spacing: 0.08em;
+
   /* Asosiy rollar */
   --color-primary: #00796a; /* seed — asosiy tugma, sarlavha aksenti, status ikonkasi */
   --color-secondary: #2196f3; /* ikkilamchi aksent */
@@ -42,6 +95,23 @@
   /* Soyalar */
   --shadow-card: 0 1px 2px rgba(20, 24, 31, 0.04), 0 8px 24px rgba(20, 24, 31, 0.05);
   --shadow-panel: 0 4px 12px rgba(20, 24, 31, 0.05), 0 24px 60px rgba(20, 24, 31, 0.09);
+}
+
+/* Katta sarlavhalar ekran kengayishi bilan o'sadi. O'lcham token ichida
+   almashadi — komponentda `text-display` yoziladi, sm:/xl: variantlari emas.
+   Chegaralar Tailwind'ning sm (40rem) va xl (80rem) breakpoint'lari bilan bir xil. */
+@media (width >= 40rem) {
+  :root {
+    --text-display: 3.25rem;
+    --text-section: 2.25rem;
+    --text-page: 1.75rem;
+  }
+}
+
+@media (width >= 80rem) {
+  :root {
+    --text-display: 3.75rem;
+  }
 }
 
 /* ---------------------------------------------------------------

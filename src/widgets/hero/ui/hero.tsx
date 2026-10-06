@@ -53,9 +53,11 @@ export function Hero() {
         rows={PATTERN_BOTTOM_LEFT}
         className="absolute bottom-0 left-0 w-56 max-lg:hidden"
       />
-      <Container className="relative grid items-center gap-14 py-16 lg:grid-cols-2 lg:gap-16 lg:py-24">
+      {/* xl'da chap ustun biroz kengroq: 60px sarlavhaning birinchi qatori
+          ("Ishonchli sertifikat") teng ikki ustunga sig'maydi va uch qatorga sinadi. */}
+      <Container className="relative grid items-center gap-14 py-16 lg:grid-cols-2 lg:gap-16 lg:py-24 xl:grid-cols-[1.1fr_1fr]">
         <div>
-          <h1 className="text-heading max-w-[15ch] text-[40px] leading-[1.08] font-extrabold tracking-[-0.03em] sm:text-[52px]">
+          <h1 className="text-heading text-display max-w-[16ch]">
             {/* uz/ru so'z tartibi farq qilgani uchun <Trans> ishlatiladi (prefix/suffix bo'lishdan afzal) */}
             {/* t va i18n aniq prop sifatida uzatiladi: React Compiler statik i18nKey/components */}
             {/* props'iga qarab elementni memoizatsiya qilib qo'yishi mumkin, shunda til */}
@@ -69,7 +71,7 @@ export function Hero() {
             />
           </h1>
 
-          <p className="text-body mt-6 max-w-[46ch] text-[16px] leading-[1.65]">
+          <p className="text-body text-lead mt-6 max-w-[46ch]">
             {t('hero.subtitle')}
           </p>
 
@@ -94,10 +96,10 @@ export function Hero() {
             {STATS.map(({ id, icon: Icon, labelKey, valueKey }) => (
               <div key={id} className="bg-surface-muted rounded-xl px-5 py-4">
                 <Icon className="text-primary size-5" strokeWidth={2.2} aria-hidden="true" />
-                <p className="text-neutral mt-3 text-[11px] font-bold tracking-[0.14em] uppercase">
+                <p className="text-neutral text-caption mt-3">
                   {t(labelKey)}
                 </p>
-                <p className="text-heading mt-0.5 text-[15px] font-bold">{t(valueKey)}</p>
+                <p className="text-heading text-subtitle mt-0.5">{t(valueKey)}</p>
               </div>
             ))}
           </div>

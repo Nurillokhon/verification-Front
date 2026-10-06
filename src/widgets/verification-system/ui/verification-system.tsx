@@ -55,10 +55,10 @@ export function VerificationSystem() {
     <section className="bg-surface-muted overflow-hidden">
       <Container className="grid gap-14 py-20 lg:grid-cols-2 lg:gap-16 lg:py-28">
         <div>
-          <h2 className="text-heading max-w-[18ch] text-[30px] leading-[1.15] font-extrabold tracking-[-0.02em] sm:text-[34px]">
+          <h2 className="text-heading text-section max-w-[18ch]">
             {t('verificationSystem.title')}
           </h2>
-          <p className="text-body mt-5 max-w-[52ch] text-[15px] leading-[1.7]">
+          <p className="text-body text-lead mt-5 max-w-[52ch]">
             {t('verificationSystem.description')}
           </p>
 
@@ -69,8 +69,8 @@ export function VerificationSystem() {
                   <Icon className="text-primary size-5" strokeWidth={2.1} aria-hidden="true" />
                 </span>
                 <div>
-                  <h3 className="text-heading text-[15px] font-bold">{t(titleKey)}</h3>
-                  <p className="text-body mt-1 text-[13.5px] leading-[1.6]">{t(textKey)}</p>
+                  <h3 className="text-heading text-subtitle">{t(titleKey)}</h3>
+                  <p className="text-body text-copy mt-1">{t(textKey)}</p>
                 </div>
               </li>
             ))}

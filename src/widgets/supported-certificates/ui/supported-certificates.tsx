@@ -56,10 +56,10 @@ export function SupportedCertificates() {
     <section className="bg-surface-sky">
       <Container className="py-20 lg:py-28">
         <div className="mx-auto max-w-[62ch] text-center">
-          <h2 className="text-heading text-[30px] leading-[1.15] font-extrabold tracking-[-0.02em] sm:text-[36px]">
+          <h2 className="text-heading text-section">
             {t('supportedCertificates.title')}
           </h2>
-          <p className="text-body mx-auto mt-4 max-w-[54ch] text-[15px] leading-[1.7]">
+          <p className="text-body text-lead mx-auto mt-4 max-w-[54ch]">
             {t('supportedCertificates.description')}
           </p>
         </div>
@@ -75,8 +75,8 @@ export function SupportedCertificates() {
               <ArrowUpRight className="text-heading size-5" strokeWidth={2.2} aria-hidden="true" />
             </div>
             <div>
-              <h3 className="text-heading text-[22px] font-bold">{t('supportedCertificates.ielts.title')}</h3>
-              <p className="text-body mt-2 max-w-[40ch] text-[14px] leading-[1.65]">
+              <h3 className="text-heading text-page">{t('supportedCertificates.ielts.title')}</h3>
+              <p className="text-body text-lead mt-2 max-w-[40ch]">
                 {t('supportedCertificates.ielts.text')}
               </p>
             </div>
@@ -87,8 +87,8 @@ export function SupportedCertificates() {
               <span className="bg-secondary/12 flex size-11 items-center justify-center rounded-xl">
                 <Icon className="text-secondary size-5" strokeWidth={2.1} aria-hidden="true" />
               </span>
-              <h3 className="text-heading mt-8 text-[19px] font-bold">{t(titleKey)}</h3>
-              <p className="text-body mt-2 text-[13.5px] leading-[1.65]">{t(textKey)}</p>
+              <h3 className="text-heading text-title mt-8">{t(titleKey)}</h3>
+              <p className="text-body text-lead mt-2">{t(textKey)}</p>
             </article>
           ))}
         </div>
@@ -98,10 +98,10 @@ export function SupportedCertificates() {
             <span className="bg-primary-soft flex size-11 items-center justify-center rounded-xl">
               <BookOpen className="text-primary size-5" strokeWidth={2.1} aria-hidden="true" />
             </span>
-            <h3 className="text-heading mt-7 text-[22px] font-bold">
+            <h3 className="text-heading text-page mt-7">
               {t('supportedCertificates.academicLocal.title')}
             </h3>
-            <p className="text-body mt-3 max-w-[44ch] text-[14px] leading-[1.7]">
+            <p className="text-body text-lead mt-3 max-w-[44ch]">
               {t('supportedCertificates.academicLocal.text')}
             </p>
           </div>
@@ -111,10 +111,10 @@ export function SupportedCertificates() {
               <div key={id} className="bg-surface-muted rounded-xl px-4 py-6 text-center">
                 <dt className="sr-only">{t(labelKey)}</dt>
                 <dd>
-                  <span className="text-heading block text-[24px] font-extrabold tracking-tight">
+                  <span className="text-heading text-page block">
                     {t(valueKey)}
                   </span>
-                  <span className="text-neutral mt-1.5 block text-[9.5px] font-bold tracking-[0.07em] whitespace-nowrap uppercase">
+                  <span className="text-neutral text-caption mt-1.5 block">
                     {t(labelKey)}
                   </span>
                 </dd>
