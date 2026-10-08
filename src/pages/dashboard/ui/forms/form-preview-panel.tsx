@@ -2,7 +2,7 @@ import { message } from 'antd'
 import { Award, Info, Pencil } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toSelectOptions, useAllCertificateTypes, useTypeForm } from '@/entities/dictionary'
+import { toTypeSelectOptions, useAllCertificateTypes, useTypeForm } from '@/entities/dictionary'
 import { TypeFormEditor } from '@/features/type-form-editor'
 import { Button, FormAlert, InfoNote, SelectField } from '@/shared/ui'
 import { TypeFormPreview } from './type-form-preview'
@@ -36,7 +36,7 @@ export function FormPreviewPanel() {
           icon={Award}
           hint={t(isEditing ? 'dashboard.forms.editor.typeLocked' : 'dashboard.forms.preview.typeHint')}
           placeholder={t('dashboard.certificateForm.fields.select')}
-          options={toSelectOptions(types)}
+          options={toTypeSelectOptions(types)}
           // Tahrirlash paytida tur almashsa saqlanmagan o'zgarishlar boshqa turga tushib qoladi
           disabled={isTypesLoading || isEditing}
           value={typeId}

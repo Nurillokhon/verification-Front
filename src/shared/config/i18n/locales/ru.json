@@ -430,7 +430,8 @@
           "createdAt": "Дата отправки",
           "expert": "Эксперт",
           "invoice": "Номер счёта",
-          "amount": "Сумма"
+          "amount": "Сумма",
+          "overall": "Общий результат"
         },
         "historyTitle": "История статусов",
         "historyEmpty": "История пока пуста",
@@ -738,7 +739,11 @@
         "fileRemove": "Удалить файл",
         "fileCurrent": "Текущий файл",
         "typeEmpty": "Для этого языка типы сертификатов не найдены",
-        "typeFormLoading": "Загружается форма типа…"
+        "typeFormLoading": "Загружается форма типа…",
+        "overall": "Общий результат",
+        "cefr": "Уровень CEFR: {{cefr}}",
+        "cefrUnknown": "Для этого результата уровень CEFR не определён",
+        "overallRange": "от {{min}} до {{max}}"
       },
       "submitCreate": "Отправить заявку",
       "submitEdit": "Сохранить изменения",

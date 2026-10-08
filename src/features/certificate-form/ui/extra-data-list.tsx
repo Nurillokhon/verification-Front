@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { parseExtraData, type CertificateDataItem } from '@/entities/certificate'
+import { parseExtraData, parseScoreCefr, type CertificateDataItem } from '@/entities/certificate'
 
 type ExtraDataListProps = {
   title: string
@@ -17,9 +17,15 @@ type Entry = {
 
 function toScoreEntries(extraData: unknown): Entry[] {
   // parseExtraData() bo'lim NOMI bo'yicha kalitlaydi — yorliq sifatida shuning o'zi ishlatiladi
+  const cefr = parseScoreCefr(extraData)
   return Object.entries(parseExtraData(extraData))
     .filter(([, value]) => value !== '')
-    .map(([name, value]) => ({ key: name, label: name, value }))
+    // Tur formasida bo'limlar uchun CEFR yoqilgan bo'lsa: "7.5 (C1)"
+    .map(([name, value]) => ({
+      key: name,
+      label: name,
+      value: cefr[name] ? `${value} (${cefr[name]})` : value,
+    }))
 }
 
 function toCustomEntries(data: CertificateDataItem[] | null | undefined): Entry[] {

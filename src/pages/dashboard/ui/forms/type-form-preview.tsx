@@ -2,6 +2,7 @@ import { Award, CalendarDays, GraduationCap, Hash, MapPin } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import {
   toSelectOptions,
+  toTypeSelectOptions,
   useAllCertificateTypes,
   useDegrees,
   type TypeForm,
@@ -9,10 +10,13 @@ import {
 import {
   CustomFields,
   FormSection,
+  OverallField,
   ScoreFields,
   getCoreRule,
   getCustomFields,
+  getResult,
   getScoreFields,
+  hasOverall,
 } from '@/features/certificate-form'
 import { DateField, SelectField, TextField } from '@/shared/ui'
 
@@ -41,6 +45,8 @@ export function TypeFormPreview({ typeId, typeForm, isLoading }: TypeFormPreview
   const degreeRule = getCoreRule(typeForm, 'degree')
   const examDateRule = getCoreRule(typeForm, 'exam_date')
   const examPlaceRule = getCoreRule(typeForm, 'exam_place')
+  const result = getResult(typeForm)
+  const showOverall = hasOverall(result)
 
   const selectPlaceholder = t('dashboard.certificateForm.fields.select')
 
@@ -63,7 +69,7 @@ export function TypeFormPreview({ typeId, typeForm, isLoading }: TypeFormPreview
             label={t('dashboard.certificateForm.fields.type')}
             icon={Award}
             placeholder={selectPlaceholder}
-            options={toSelectOptions(types)}
+            options={toTypeSelectOptions(types)}
             disabled
             value={typeId}
             onChange={noop}
@@ -108,14 +114,21 @@ export function TypeFormPreview({ typeId, typeForm, isLoading }: TypeFormPreview
         </div>
       </FormSection>
 
-      {scoreFields.length > 0 && (
+      {(scoreFields.length > 0 || showOverall) && (
         <FormSection title={t('dashboard.certificateForm.sections.scores')}>
-          <ScoreFields
-            fields={scoreFields}
-            values={NO_VALUES}
-            errors={NO_ERRORS}
-            onChange={noop}
-          />
+          {showOverall && (
+            <div className={`grid gap-6 sm:grid-cols-2${scoreFields.length > 0 ? ' mb-6' : ''}`}>
+              <OverallField result={result} value="" onChange={noop} />
+            </div>
+          )}
+          {scoreFields.length > 0 && (
+            <ScoreFields
+              fields={scoreFields}
+              values={NO_VALUES}
+              errors={NO_ERRORS}
+              onChange={noop}
+            />
+          )}
         </FormSection>
       )}
 

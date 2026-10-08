@@ -10,12 +10,14 @@ export type {
 } from './model/types'
 export {
   canEditCertificate,
+  formatOverallResult,
   getCertificateFileUrl,
   getStatusTone,
   normalizeStatus,
   isCertificatePaid,
   parseCertificateId,
   parseExtraData,
+  parseScoreCefr,
   type StatusTone,
 } from './model/certificate'
 export {

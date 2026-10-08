@@ -430,7 +430,8 @@
           "createdAt": "Yuborilgan vaqti",
           "expert": "Ekspert",
           "invoice": "Hisob raqami",
-          "amount": "Summa"
+          "amount": "Summa",
+          "overall": "Umumiy natija"
         },
         "historyTitle": "Holatlar tarixi",
         "historyEmpty": "Tarix hozircha bo'sh",
@@ -738,7 +739,11 @@
         "fileRemove": "Faylni olib tashlash",
         "fileCurrent": "Joriy fayl",
         "typeEmpty": "Bu til uchun sertifikat turlari topilmadi",
-        "typeFormLoading": "Tur formasi yuklanmoqda…"
+        "typeFormLoading": "Tur formasi yuklanmoqda…",
+        "overall": "Umumiy natija",
+        "cefr": "CEFR darajasi: {{cefr}}",
+        "cefrUnknown": "Bu natija uchun CEFR darajasi belgilanmagan",
+        "overallRange": "{{min}} dan {{max}} gacha"
       },
       "submitCreate": "Arizani yuborish",
       "submitEdit": "O'zgarishlarni saqlash",

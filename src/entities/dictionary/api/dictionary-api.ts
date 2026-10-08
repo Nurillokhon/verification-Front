@@ -1,5 +1,5 @@
 import { useGetRequest, type Paginated } from '@/shared/api'
-import type { DictionaryItem, LanguageItem, TypeForm } from '../model/types'
+import type { CertificateTypeItem, DictionaryItem, LanguageItem, TypeForm } from '../model/types'
 
 const ENDPOINTS = {
   language: '/dictionary/language/',
@@ -64,7 +64,9 @@ export function useCertificateTypes(languageId?: string) {
 
 /** Til filtrisiz barcha faol sertifikat turlari — masalan, ekspertga tur biriktirish uchun. */
 export function useAllCertificateTypes({ enabled = true }: { enabled?: boolean } = {}) {
-  const { data, isLoading } = useGetRequest<DictionaryItem[]>({
+  // Til bo'yicha filtrlanmagan ro'yxat - `language_name` bilan ko'rsatiladi
+  // (toTypeSelectOptions), aks holda har tildagi "Milliy sertifikat" bir xil.
+  const { data, isLoading } = useGetRequest<CertificateTypeItem[]>({
     url: ENDPOINTS.type,
     options: { staleTime: DICTIONARY_STALE_TIME, enabled },
   })

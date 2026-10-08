@@ -41,11 +41,14 @@ import {
   getCoreRule,
   getCustomErrorKey,
   getCustomFields,
+  getResult,
   getScoreErrorKey,
   getScoreFields,
+  hasOverall,
 } from '../model/type-form'
 import { CustomFields } from './custom-fields'
 import { FormSection } from './form-section'
+import { OverallField } from './overall-field'
 import { ScoreFields } from './score-fields'
 
 type CertificateFormProps = {
@@ -105,6 +108,9 @@ export function CertificateForm({
   const degreeRule = getCoreRule(typeForm, 'degree')
   const examDateRule = getCoreRule(typeForm, 'exam_date')
   const examPlaceRule = getCoreRule(typeForm, 'exam_place')
+  // Umumiy natija (IELTS 7.0, HSK 4, B2) - tur formasidagi `result` bo'yicha
+  const result = getResult(typeForm)
+  const showOverall = hasOverall(result)
 
   // Tur almashtirilgan bo'lsa sertifikatdagi ball ID lari yangi bo'limlarga tegishli emas
   const scoreIds = values.type === defaultValues.type ? values.scoreIds : undefined
@@ -121,7 +127,7 @@ export function CertificateForm({
 
   // Forma tuzilishi turga bog'liq — tur almashsa eski ball va erkin maydon qiymatlari yaroqsiz
   const changeType = (type: string) => {
-    setValues((prev) => ({ ...prev, type, scores: {}, custom: {} }))
+    setValues((prev) => ({ ...prev, type, scores: {}, custom: {}, overall: '' }))
     setErrors({})
     setApiError(null)
   }
@@ -245,14 +251,26 @@ export function CertificateForm({
 
       {typeFormError && <FormAlert>{t('dashboard.certificateForm.errors.typeForm')}</FormAlert>}
 
-      {scoreFields.length > 0 && (
+      {(scoreFields.length > 0 || showOverall) && (
         <FormSection title={t('dashboard.certificateForm.sections.scores')}>
-          <ScoreFields
-            fields={scoreFields}
-            values={values.scores}
-            errors={errors}
-            onChange={updateScore}
-          />
+          {showOverall && (
+            <div className={`grid gap-6 sm:grid-cols-2${scoreFields.length > 0 ? ' mb-6' : ''}`}>
+              <OverallField
+                result={result}
+                value={values.overall}
+                error={errors.overall}
+                onChange={(value) => updateField('overall', value)}
+              />
+            </div>
+          )}
+          {scoreFields.length > 0 && (
+            <ScoreFields
+              fields={scoreFields}
+              values={values.scores}
+              errors={errors}
+              onChange={updateScore}
+            />
+          )}
         </FormSection>
       )}
 

@@ -103,6 +103,31 @@ function fromScoreList(items: readonly unknown[]): Record<string, string> {
 }
 
 /**
+ * Bo'lim nomi → CEFR (masalan "Listening" → "C1"). Faqat backend CEFR bergan
+ * bo'limlar kiradi — tur formasida bo'limlar uchun CEFR yoqilmagan bo'lsa bo'sh.
+ */
+export function parseScoreCefr(raw: unknown): Record<string, string> {
+  if (!Array.isArray(raw)) return {};
+  return Object.fromEntries(
+    raw.flatMap((item) => {
+      if (typeof item !== "object" || item === null) return [];
+      const { section, cefr } = item as { section?: unknown; cefr?: unknown };
+      if (section == null || typeof cefr !== "string" || !cefr) return [];
+      return [[String(section), cefr]];
+    }),
+  );
+}
+
+/** "7.0 (C1)", "HSK 4 (B2)", "B2" — CEFR qiymatning o'zi bo'lsa takrorlanmaydi. */
+export function formatOverallResult(
+  value: string | null | undefined,
+  cefr: string | null | undefined,
+): string {
+  if (!value) return "";
+  return cefr && cefr !== value ? `${value} (${cefr})` : value;
+}
+
+/**
  * extra_data'ni "maydon nomi → qiymat" ko'rinishiga keltiradi. Backend ballar massivini
  * (ScoreRead) yoki JSON satr-obyektni qaytarishi mumkin; buzilgan qiymat bo'sh obyekt beradi.
  */

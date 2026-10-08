@@ -14,6 +14,26 @@ export function toSelectOptions(items: readonly DictionaryItem[]) {
   return items.map((item) => ({ value: String(item.id), label: item.name || `#${item.id}` }))
 }
 
+/**
+ * GET /dictionary/type/ elementi. "Milliy sertifikat" har bir tilda alohida
+ * tur — ro'yxat til bo'yicha filtrlanmagan joyda nomi bir xil bo'lib qoladi.
+ */
+export type CertificateTypeItem = DictionaryItem & {
+  language?: number | null
+  language_name?: string | null
+}
+
+/** Tur variantlari til nomi bilan: "Milliy sertifikat — Ingliz tili". */
+export function toTypeSelectOptions(items: readonly CertificateTypeItem[]) {
+  return items.map((item) => {
+    const name = item.name || `#${item.id}`
+    return {
+      value: String(item.id),
+      label: item.language_name ? `${name} — ${item.language_name}` : name,
+    }
+  })
+}
+
 // --- Tur formasi: GET /dictionary/type/<id>/form/ (swagger: TypeForm) ---
 
 /** Asosiy maydon qoidasi (swagger: TypeFormCoreRule). `enabled: false` — maydon chizilmaydi va yuborilsa ham saqlanmaydi. */
@@ -65,6 +85,35 @@ export type TypeFormCustomField = {
   max_length?: number
 }
 
+/**
+ * Umumiy natija va uning CEFR ga muvofiqligi (swagger: TypeForm.result).
+ * Sertifikatlar natijani turlicha beradi:
+ * - `score` — ball oralig'i → CEFR (IELTS 7.0 → C1, TOEFL 95 → C1);
+ * - `grade` — daraja nomi → CEFR (HSK 4 → B2, TDN 4 → "B2.2 – C1.1");
+ * - `level` — sertifikat CEFR ni o'zi beradi (milliy sertifikat: B1, B2, C1);
+ * - `none`  — CEFR yo'q (TKT). Umumiy natija so'ralmaydi.
+ * CEFR — erkin matn. Shkalada yo'q ball uchun CEFR aniqlanmaydi.
+ */
+export type TypeFormResultKind = 'score' | 'grade' | 'level' | 'none'
+
+export type TypeFormScoreRange = { min: number; max: number; cefr: string; name: string }
+export type TypeFormGrade = { name: string; cefr: string }
+
+export type TypeFormResult = {
+  kind: TypeFormResultKind
+  label?: string
+  required?: boolean
+  /** score */
+  score_type?: 'decimal' | 'integer'
+  min?: number | null
+  max?: number | null
+  /** score: TypeFormScoreRange[], grade: TypeFormGrade[] */
+  scale?: Array<TypeFormScoreRange | TypeFormGrade>
+  /** level */
+  levels?: string[]
+  section_cefr?: boolean
+}
+
 export type TypeForm = {
   type: number
   type_name: string
@@ -73,6 +122,8 @@ export type TypeForm = {
   core: TypeFormCore
   fields: TypeFormScoreField[]
   custom_fields: TypeFormCustomField[]
+  /** Eski backend javobida bo'lmaydi — `none` deb hisoblanadi */
+  result?: TypeFormResult
 }
 
 /** Select variantlari satrlar ro'yxatidan — custom_fields[].options shu ko'rinishda keladi. */

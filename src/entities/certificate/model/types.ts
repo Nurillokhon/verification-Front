@@ -23,6 +23,12 @@ export type CertificateListItem = {
   language_name: string
   type_name: string
   degree_name: string
+  /**
+   * Umumiy natija (IELTS "7.0", HSK "HSK 4", milliy sertifikat "B2") va ariza
+   * saqlangan paytdagi CEFR. Tur formasida `result` sozlanmagan eski arizalarda null.
+   */
+  overall_result?: string | null
+  overall_cefr?: string | null
   /** Holat kodi — masalan NEW, PROBLEM */
   status: string
   /** Ekspert izohi (odatda PROBLEM holatida) */
@@ -56,6 +62,8 @@ export type CertificateScore = {
   /** Bo'lim NOMI (masalan "Reading"), ID emas */
   section: string | null
   score: string | null
+  /** Shu ball uchun CEFR — tur formasida bo'limlar uchun CEFR yoqilgan bo'lsa */
+  cefr?: string | null
 }
 
 /**

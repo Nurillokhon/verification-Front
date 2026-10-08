@@ -8,5 +8,12 @@ export { ExtraDataList } from './ui/extra-data-list'
 // bir xil bo'lishi uchun aynan shu komponentlar ishlatiladi.
 export { CustomFields } from './ui/custom-fields'
 export { FormSection } from './ui/form-section'
+export { OverallField } from './ui/overall-field'
 export { ScoreFields } from './ui/score-fields'
-export { getCustomFields, getCoreRule, getScoreFields } from './model/type-form'
+export {
+  getCustomFields,
+  getCoreRule,
+  getResult,
+  getScoreFields,
+  hasOverall,
+} from './model/type-form'

@@ -2,7 +2,7 @@ import { Switch } from 'antd'
 import { FileBadge, KeyRound, Languages, LoaderCircle, Phone } from 'lucide-react'
 import { useId, useState, type FormEventHandler } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toSelectOptions, useAllCertificateTypes, useLanguages } from '@/entities/dictionary'
+import { toSelectOptions, toTypeSelectOptions, useAllCertificateTypes, useLanguages } from '@/entities/dictionary'
 import type { Expert } from '@/entities/expert'
 import { getApiErrorMessage } from '@/shared/api'
 import { formatUzPhone } from '@/shared/lib/phone'
@@ -90,7 +90,7 @@ export function EditExpertForm({ expert, onCancel, onSaved }: EditExpertFormProp
         label={t('dashboard.experts.create.types')}
         icon={FileBadge}
         placeholder={t('dashboard.experts.create.selectPlaceholder')}
-        options={toSelectOptions(types)}
+        options={toTypeSelectOptions(types)}
         loading={isTypesLoading}
         value={values.typeIds}
         onChange={(next) => updateField('typeIds', next)}

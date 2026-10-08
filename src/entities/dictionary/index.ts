@@ -20,6 +20,8 @@ export {
 export {
   toOptionsFromStrings,
   toSelectOptions,
+  toTypeSelectOptions,
+  type CertificateTypeItem,
   type CustomFieldKind,
   type DictionaryItem,
   type LanguageItem,
@@ -28,7 +30,11 @@ export {
   type TypeFormCoreName,
   type TypeFormCoreRule,
   type TypeFormCustomField,
+  type TypeFormGrade,
+  type TypeFormResult,
+  type TypeFormResultKind,
   type TypeFormScoreField,
+  type TypeFormScoreRange,
 } from './model/types'
 export {
   DEFAULT_LANGUAGE_CODE,

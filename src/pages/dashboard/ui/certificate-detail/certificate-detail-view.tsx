@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import {
   CertificatePaymentBadge,
   CertificateStatusBadge,
+  formatOverallResult,
   getCertificateFileUrl,
   getStatusTone,
   isCertificatePaid,
@@ -59,6 +60,12 @@ export function CertificateDetailView({
         key: 'degree',
         label: t('dashboard.certificates.detail.fields.degree'),
         value: certificate.degree_name,
+      },
+      {
+        // IELTS "7.0 (C1)", HSK "HSK 4 (B2)" - eski arizalarda bo'sh, qator chiqmaydi
+        key: 'overall',
+        label: t('dashboard.certificates.detail.fields.overall'),
+        value: formatOverallResult(certificate.overall_result, certificate.overall_cefr),
       },
       {
         key: 'issueDate',

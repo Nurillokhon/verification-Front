@@ -8,10 +8,14 @@ import {
   getCoreRule,
   getCustomErrorKey,
   getCustomFields,
+  getOverallOptions,
+  getResult,
   getScoreErrorKey,
   getScoreFields,
   getScoreKey,
+  hasOverall,
   isNumericScore,
+  parseOverallScore,
 } from './type-form'
 
 export type CertificateFormMode = 'create' | 'edit'
@@ -26,6 +30,11 @@ export type CertificateFormValues = {
   issueDate: string
   examDate: string
   examPlace: string
+  /**
+   * Umumiy natija (IELTS "7.0", HSK "HSK 4", milliy sertifikat "B2") — tur
+   * formasidagi `result` bo'yicha. `none` turlarida yuborilmaydi.
+   */
+  overall: string
   file: File | null
   /** Ball maydonlari: getScoreKey() kaliti (bo'lim nomi) → ball */
   scores: Record<string, string>
@@ -53,6 +62,7 @@ export const EMPTY_CERTIFICATE_FORM: CertificateFormValues = {
   issueDate: '',
   examDate: '',
   examPlace: '',
+  overall: '',
   file: null,
   scores: EMPTY_RECORD,
   custom: EMPTY_RECORD,
@@ -91,6 +101,7 @@ export function toCertificateFormValues(certificate: CertificateDetail): Certifi
     issueDate: certificate.issue_date ?? '',
     examDate: certificate.exam_date ?? '',
     examPlace: certificate.exam_place ?? '',
+    overall: certificate.overall_result ?? '',
     file: null,
     // parseExtraData() bo'lim NOMI bo'yicha kalitlaydi — getScoreKey() bilan bir xil
     scores: parseExtraData(certificate.extra_data),
@@ -186,6 +197,29 @@ function validateCustom(field: TypeFormCustomField, raw: string): CertificateFor
   return undefined
 }
 
+/** Umumiy natija — backend (type_form.validate_overall) bilan bir xil qoida. */
+function validateOverall(form: TypeForm | undefined, raw: string): CertificateFormError | undefined {
+  const result = getResult(form)
+  if (!hasOverall(result)) return undefined
+
+  const value = raw.trim()
+  if (!value) return result.required === false ? undefined : REQUIRED
+
+  const options = getOverallOptions(result)
+  if (options.length > 0) {
+    return options.some((option) => option.toLowerCase() === value.toLowerCase())
+      ? undefined
+      : { key: ERROR_KEYS.option }
+  }
+
+  const parsed = parseOverallScore(value)
+  if (parsed === null) return { key: ERROR_KEYS.number }
+  if (result.score_type === 'integer' && !Number.isInteger(parsed)) {
+    return { key: ERROR_KEYS.integer }
+  }
+  return validateRange(parsed, result.min, result.max)
+}
+
 /**
  * Formani tekshiradi. Asosiy maydonlarning majburiyligi tur formasidagi `core`
  * qoidalariga bo'ysunadi: o'chirilgan maydon chizilmaydi, demak tekshirilmaydi ham.
@@ -214,6 +248,9 @@ export function validateCertificateForm(
   if (core.examPlace.enabled && core.examPlace.required && !values.examPlace.trim()) {
     errors.examPlace = REQUIRED
   }
+
+  const overallError = validateOverall(form, values.overall)
+  if (overallError) errors.overall = overallError
 
   // Tahrirlashda fayl ixtiyoriy — yangisi tanlanmasa serverdagisi saqlanib qoladi
   if (values.file && values.file.size > MAX_FILE_SIZE) {
@@ -301,6 +338,12 @@ export function toCertificateFormData({ values, form, scoreIds }: CertificateFor
   }
   if (getCoreRule(form, 'exam_place').enabled && values.examPlace.trim()) {
     data.append('exam_place', values.examPlace.trim())
+  }
+
+  // CEFR i yo'q turda (TKT) yuborilmaydi — backend uni rad etadi. Tahrirlashda
+  // bo'sh qiymat ham yuboriladi: tozalangan natija shu yo'l bilan o'chadi.
+  if (hasOverall(getResult(form))) {
+    data.append('overall_result', values.overall.trim().replace(',', '.'))
   }
 
   if (values.file) data.append('file', values.file)

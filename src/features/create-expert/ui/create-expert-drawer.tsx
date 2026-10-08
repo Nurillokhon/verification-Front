@@ -2,7 +2,7 @@ import { Drawer, message } from 'antd'
 import { FileBadge, IdCard, Languages, LoaderCircle, Lock, Phone, X } from 'lucide-react'
 import { useState, type FormEventHandler } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toSelectOptions, useAllCertificateTypes, useLanguages } from '@/entities/dictionary'
+import { toSelectOptions, toTypeSelectOptions, useAllCertificateTypes, useLanguages } from '@/entities/dictionary'
 import { getApiErrorMessage } from '@/shared/api'
 import { formatUzPhone } from '@/shared/lib/phone'
 import { Button, FormAlert, MultiSelectField, PasswordField, TextField } from '@/shared/ui'
@@ -186,7 +186,7 @@ function CreateExpertForm({ createExpert, onCreated }: CreateExpertFormProps) {
         label={t('dashboard.experts.create.types')}
         icon={FileBadge}
         placeholder={t('dashboard.experts.create.selectPlaceholder')}
-        options={toSelectOptions(types)}
+        options={toTypeSelectOptions(types)}
         loading={isTypesLoading}
         value={values.typeIds}
         onChange={(next) => updateField('typeIds', next)}

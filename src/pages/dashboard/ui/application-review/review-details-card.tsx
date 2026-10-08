@@ -1,7 +1,12 @@
 import { Pencil } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
-import { parseExtraData, type CertificateDetail } from '@/entities/certificate'
+import {
+  formatOverallResult,
+  parseExtraData,
+  parseScoreCefr,
+  type CertificateDetail,
+} from '@/entities/certificate'
 import { formatApiDate } from '@/shared/lib/format'
 import { buttonVariants } from '@/shared/ui'
 
@@ -46,6 +51,12 @@ export function ReviewDetailsCard({ certificate, editTo, linkState }: ReviewDeta
       value: certificate.degree_name,
     },
     {
+      // IELTS "7.0 (C1)", HSK "HSK 4 (B2)" - eski arizalarda bo'sh, qator chiqmaydi
+      key: 'overall',
+      label: t('dashboard.certificates.detail.fields.overall'),
+      value: formatOverallResult(certificate.overall_result, certificate.overall_cefr),
+    },
+    {
       key: 'expirationDate',
       label: t('dashboard.certificates.detail.fields.expirationDate'),
       value: formatApiDate(certificate.expiration_date),
@@ -53,6 +64,8 @@ export function ReviewDetailsCard({ certificate, editTo, linkState }: ReviewDeta
   ].filter((row) => row.value)
 
   const scores = Object.entries(parseExtraData(certificate.extra_data)).filter(([, value]) => value !== '')
+  // Bo'lim uchun CEFR - tur formasida yoqilgan bo'lsa (IELTS: Listening 7.5 - C1)
+  const scoreCefr = parseScoreCefr(certificate.extra_data)
 
   return (
     <section className="bg-surface shadow-card border-line rounded-2xl border p-5 sm:p-6">
@@ -85,6 +98,9 @@ export function ReviewDetailsCard({ certificate, editTo, linkState }: ReviewDeta
               <li key={name} className="border-line rounded-xl border px-3 py-4 text-center">
                 <p className="text-body truncate text-[13px]">{name}</p>
                 <p className="text-secondary mt-1 text-[20px] font-bold tabular-nums">{value}</p>
+                {scoreCefr[name] && (
+                  <p className="text-body mt-0.5 text-[12px] font-semibold">CEFR {scoreCefr[name]}</p>
+                )}
               </li>
             ))}
           </ul>
