@@ -1,9 +1,9 @@
 import { BadgeCheck, History } from 'lucide-react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
+import heroImage from '@/shared/assets/hero-certificate.jpg'
 import { ROUTES } from '@/shared/config'
 import { BlockPattern, buttonVariants, Container } from '@/shared/ui'
-import { CertificatePreview } from './certificate-preview'
 import { TrustBadge } from './trust-badge'
 
 // Faqat kalitlar/ikonka modul darajasida saqlanadi — matnning o'zi t() bilan
@@ -48,9 +48,14 @@ export function Hero() {
           matn va panel doim naqsh ustida chiziladi. Tor ekranda naqsh ikki
           baravar kichrayadi, pastki-chap bo'lagi esa sarlavha ostiga tushib
           qolmasligi uchun faqat lg'dan boshlab ko'rinadi. */}
-      <BlockPattern rows={PATTERN_TOP_RIGHT} className="absolute top-0 right-0 w-49 lg:w-98" />
+      <BlockPattern
+        rows={PATTERN_TOP_RIGHT}
+        animated
+        className="absolute top-0 right-0 w-49 lg:w-98"
+      />
       <BlockPattern
         rows={PATTERN_BOTTOM_LEFT}
+        animated
         className="absolute bottom-0 left-0 w-56 max-lg:hidden"
       />
       {/* xl'da chap ustun biroz kengroq: 60px sarlavhaning birinchi qatori
@@ -90,7 +95,16 @@ export function Hero() {
         </div>
 
         <div className="bg-surface shadow-panel rounded-2xl p-4 sm:p-5">
-          <CertificatePreview />
+          {/* Sahifaning eng katta elementi (LCP) — lazy emas, yuqori ustuvorlik bilan yuklanadi */}
+          <img
+            src={heroImage}
+            alt={t('hero.certificatePreview.ariaLabel')}
+            width={1280}
+            height={719}
+            fetchPriority="high"
+            decoding="async"
+            className="block h-auto w-full rounded-xl"
+          />
 
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {STATS.map(({ id, icon: Icon, labelKey, valueKey }) => (

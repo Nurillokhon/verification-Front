@@ -14,6 +14,11 @@ const FILL_OPACITY: Record<string, number> = { '1': 0.06, '2': 0.11, '3': 0.18 }
 const ACCENT_OPACITY = 0.45
 const OUTLINE_OPACITY = 0.22
 
+// `animated` to'lqini: qo'shni diagonal bloklar orasidagi kechikish (soniya) va
+// barcha kechikishlarni manfiy qilib turadigan umumiy siljish.
+const WAVE_STEP = 0.3
+const WAVE_LEAD = 12
+
 type BlockPatternProps = {
   /**
    * Naqsh xaritasi — har bir satr bitta qator, har bir belgi bitta katak:
@@ -21,6 +26,8 @@ type BlockPatternProps = {
    * `o` faqat konturi · `b` ko'k aksent bloki (logotipdagi kabi — bitta bo'lsin).
    */
   rows: readonly string[]
+  /** Bloklar zina bo'ylab to'lqin bo'lib so'nib-yonadi (reduced-motion'da o'chiq). */
+  animated?: boolean
   /** Kenglikni shu yerdan bering (masalan `w-60`) — balandlik nisbat bo'yicha. */
   className?: string
 }
@@ -30,7 +37,7 @@ type BlockPatternProps = {
  * yashirilgan va sichqoncha hodisalarini ushlamaydi. Joylashuvni (absolute,
  * burchak) chaqiruvchi `className` orqali beradi.
  */
-export function BlockPattern({ rows, className }: BlockPatternProps) {
+export function BlockPattern({ rows, animated = false, className }: BlockPatternProps) {
   const cols = Math.max(...rows.map((row) => row.length))
 
   return (
@@ -50,12 +57,23 @@ export function BlockPattern({ rows, className }: BlockPatternProps) {
             height: BLOCK,
           }
           const key = `${colIndex}-${rowIndex}`
+          // Kechikish zina bo'ylab o'sadi (o'ngga va yuqoriga — logotip yo'nalishi),
+          // shunda bloklar birdaniga emas, pastdan yuqoriga ko'tariladigan to'lqin
+          // bo'lib so'nib-yonadi. Manfiy qiymat: sahifa ochilganda to'lqin allaqachon
+          // yo'lda bo'ladi, hamma blok bir vaqtda boshlamaydi.
+          const twinkle = animated
+            ? {
+                className: 'motion-safe:animate-twinkle',
+                style: { animationDelay: `${(colIndex - rowIndex) * WAVE_STEP - WAVE_LEAD}s` },
+              }
+            : undefined
 
           if (symbol === 'o') {
             return (
               <rect
                 key={key}
                 {...rect}
+                {...twinkle}
                 fill="none"
                 stroke="currentColor"
                 strokeOpacity={OUTLINE_OPACITY}
@@ -66,10 +84,26 @@ export function BlockPattern({ rows, className }: BlockPatternProps) {
           }
 
           if (symbol === 'b') {
-            return <rect key={key} {...rect} className="fill-secondary" fillOpacity={ACCENT_OPACITY} />
+            return (
+              <rect
+                key={key}
+                {...rect}
+                {...twinkle}
+                className={cn('fill-secondary', twinkle?.className)}
+                fillOpacity={ACCENT_OPACITY}
+              />
+            )
           }
 
-          return <rect key={key} {...rect} fill="currentColor" fillOpacity={FILL_OPACITY[symbol]} />
+          return (
+            <rect
+              key={key}
+              {...rect}
+              {...twinkle}
+              fill="currentColor"
+              fillOpacity={FILL_OPACITY[symbol]}
+            />
+          )
         }),
       )}
     </svg>
