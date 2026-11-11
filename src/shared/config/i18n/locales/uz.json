@@ -951,5 +951,23 @@
         }
       }
     }
+  },
+  "notifications": {
+    "title": "Bildirishnomalar",
+    "unread": "O'qilmagan",
+    "unreadCount": "{{count}} ta o'qilmagan",
+    "markAllRead": "Hammasini o'qilgan qilish",
+    "number": "№ {{number}}",
+    "status": {
+      "approved": "Arizangiz tasdiqlandi",
+      "rejected": "Arizangiz rad etildi",
+      "problem": "Arizangizda muammo bor"
+    },
+    "empty": {
+      "title": "Bildirishnoma yo'q",
+      "text": "Arizangiz holati o'zgarsa, shu yerda ko'rasiz."
+    },
+    "error": "Bildirishnomalarni yuklab bo'lmadi.",
+    "retry": "Qayta urinish"
   }
 }

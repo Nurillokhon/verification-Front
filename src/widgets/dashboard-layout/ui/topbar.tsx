@@ -1,8 +1,9 @@
 /** @format */
 
-import { Bell, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { CurrentUser } from "@/entities/user";
+import { NotificationBell } from "@/features/notifications";
 import { LanguageSwitcher, SearchInput, ThemeSwitcher } from "@/shared/ui";
 import { UserChip } from "./user-chip";
 
@@ -36,13 +37,9 @@ export function Topbar({ user, onOpenSidebar }: TopbarProps) {
       <div className="ml-auto flex items-center gap-1.5 sm:gap-2.5">
         <ThemeSwitcher />
         <LanguageSwitcher />
-        <button
-          type="button"
-          aria-label={t("dashboard.topbar.notifications")}
-          className="text-heading hover:bg-surface-muted flex size-9 shrink-0 items-center justify-center rounded-lg transition-colors"
-        >
-          <Bell className="size-4.5" strokeWidth={2} aria-hidden="true" />
-        </button>
+        {/* Bildirishnomalar faqat nomzodga: ular ariza holati o'zgarganda
+            yoziladi, ekspert va admin uchun manba yo'q */}
+        {user?.role === "candidate" && <NotificationBell />}
         <div className="border-line ml-1 border-l pl-2.5 sm:pl-3">
           <UserChip user={user} />
         </div>
