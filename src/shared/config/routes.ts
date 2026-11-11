@@ -9,6 +9,10 @@ export const ROUTES = {
   home: "/",
   login: "/login",
   register: "/register",
+  // Ma'lumotnomani tekshirish (ochiq). QR ichidagi backend manzili /v/<uuid>
+  // shu sahifaga yo'naltiradi — yo'l nomini o'zgartirmang.
+  verify: "/v",
+  verifyResult: "/v/:key",
   dashboard: "/dashboard",
   certificates: "/certificates",
   certificateDetail: "/certificates/:id",

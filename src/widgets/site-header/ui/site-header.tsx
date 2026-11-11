@@ -1,5 +1,6 @@
 /** @format */
 
+import { ScanLine } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { ROUTES } from "@/shared/config";
@@ -34,6 +35,20 @@ export function SiteHeader() {
         </Link>
 
         <nav className="flex items-center gap-1 sm:gap-2">
+          {/* 640px dan tor ekranda yo'q: 375px'da nav joyi to'la, ikonka ham
+              "Kirish"ni ekrandan chiqarib yuboradi. Telefonda QR sahifani
+              o'zi ochadi. */}
+          <Link
+            to={ROUTES.verify}
+            className={buttonVariants({
+              variant: "ghost",
+              size: "sm",
+              className: "max-sm:hidden",
+            })}
+          >
+            <ScanLine className="size-4.5" strokeWidth={2.2} aria-hidden="true" />
+            {t("header.verify")}
+          </Link>
           <ThemeSwitcher />
           <LanguageSwitcher />
           {/* Oddiy px-3 emas — max-sm:px-3: Button'ning size="sm" preset'i

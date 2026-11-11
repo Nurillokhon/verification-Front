@@ -34,6 +34,7 @@ const RegisterPage = lazyPage(
   () => import("@/pages/register/ui/register-page"),
   "RegisterPage",
 );
+const VerifyPage = lazyPage(() => import("@/pages/verify/ui/verify-page"), "VerifyPage");
 const NotFoundPage = lazyPage(
   () => import("@/pages/not-found/ui/not-found-page"),
   "NotFoundPage",
@@ -192,6 +193,8 @@ const router = createBrowserRouter([
           { path: ROUTES.home, element: <HomePage /> },
           { path: ROUTES.login, element: <LoginPage /> },
           { path: ROUTES.register, element: <RegisterPage /> },
+          { path: ROUTES.verify, element: <VerifyPage /> },
+          { path: ROUTES.verifyResult, element: <VerifyPage /> },
           // Statik va parametrli yo'llarning hech biri mos kelmasa — 404.
           { path: "*", element: <NotFoundPage /> },
         ],

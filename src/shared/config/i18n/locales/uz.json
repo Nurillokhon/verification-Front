@@ -1,6 +1,7 @@
 {
   "header": {
-    "login": "Kirish"
+    "login": "Kirish",
+    "verify": "Tekshirish"
   },
   "hero": {
     "title": {
@@ -951,5 +952,72 @@
         }
       }
     }
+  },
+  "verify": {
+    "loading": "Ma'lumotnoma tekshirilmoqda…",
+    "lookup": {
+      "title": "Ma'lumotnomani tekshirish",
+      "text": "Ma'lumotnomadagi QR kodni telefon kamerasi bilan skanerlang yoki QR ostidagi 8 belgili kodni kiriting."
+    },
+    "form": {
+      "label": "Tekshirish kodi",
+      "hint": "Kod ma'lumotnomada QR kod ostida yozilgan, masalan 7K3M-9QX2.",
+      "incomplete": "Kod 8 ta belgidan iborat bo'lishi kerak.",
+      "submit": "Tekshirish"
+    },
+    "notFound": {
+      "title": "Ma'lumotnoma topilmadi",
+      "text": "Bu kod bilan ma'lumotnoma yo'q. Kodni ma'lumotnomadagi bilan solishtirib, qaytadan kiriting."
+    },
+    "tooMany": {
+      "title": "Urinishlar juda ko'p",
+      "text": "Bir daqiqadan so'ng qayta urinib ko'ring."
+    },
+    "error": {
+      "title": "Tekshirib bo'lmadi",
+      "text": "Server bilan aloqa bo'lmadi. Internetni tekshirib, qayta urinib ko'ring."
+    },
+    "retry": "Qayta urinish",
+    "status": {
+      "valid": {
+        "title": "Ma'lumotnoma haqiqiy",
+        "text": "Sertifikat Bilim va malakalarni baholash agentligi huzuridagi Ilmiy-o'quv amaliy markazi tomonidan tekshirilgan va tasdiqlangan."
+      },
+      "expired": {
+        "title": "Sertifikat muddati tugagan",
+        "text": "Ma'lumotnoma haqiqiy, lekin sertifikatning amal qilish muddati {{date}} da tugagan."
+      },
+      "invalid": {
+        "title": "Ma'lumotnoma amal qilmaydi",
+        "text": "Bu ma'lumotnoma bo'yicha tasdiq bekor qilingan. Sertifikat egasidan yangi ma'lumotnoma so'rang."
+      }
+    },
+    "reference": {
+      "number": "Ma'lumotnoma №",
+      "issuedOn": "Berilgan sana:",
+      "code": "Kod:"
+    },
+    "holder": {
+      "title": "Sertifikat egasi",
+      "fullName": "F.I.Sh.",
+      "pnfl": "JShShIR",
+      "passport": "Pasport",
+      "masked": "JShShIR va pasport raqamlari qisman yashirilgan — ularni qo'lingizdagi hujjat bilan solishtiring."
+    },
+    "certificate": {
+      "title": "Sertifikat",
+      "type": "Turi va tili",
+      "number": "Sertifikat raqami",
+      "issueDate": "Berilgan sana",
+      "expirationDate": "Amal qilish muddati"
+    },
+    "results": {
+      "title": "Natijalar",
+      "section": "Bo'lim",
+      "score": "Ball"
+    },
+    "pdf": "Ma'lumotnomani ochish (PDF)",
+    "another": "Boshqa ma'lumotnomani tekshirish kerakmi?",
+    "anotherLink": "Kodni kiriting"
   }
 }
